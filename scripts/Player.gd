@@ -2,12 +2,19 @@ extends RigidBody3D
 
 @export var camera: Camera3D
 @export var thrust: int = 5
-@export var engine_particles: GPUParticles3D
+
+var fuel: Node3D
+
+signal ThrustApplied()
+
+func _ready():
+	fuel = get_node("Fuel")
 
 func _physics_process(_delta):
 	look_at_mouse()
 	if Input.is_action_just_pressed("thruster"):
-		apply_thrust()
+		if fuel.has_fuel():
+			apply_thrust()
 
 
 func look_at_mouse():
@@ -23,5 +30,5 @@ func look_at_mouse():
 	look_at(cursor_pos, Vector3.UP)
 
 func apply_thrust():
-	print(global_transform.basis)
 	apply_impulse(-global_transform.basis.z * thrust)
+	ThrustApplied.emit()

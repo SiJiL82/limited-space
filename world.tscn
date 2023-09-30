@@ -1,15 +1,49 @@
-[gd_scene load_steps=7 format=3 uid="uid://bhp02k7rppku4"]
+[gd_scene load_steps=10 format=3 uid="uid://bhp02k7rppku4"]
 
+[ext_resource type="Script" path="res://scripts/FuelBar.gd" id="1_hv1n5"]
 [ext_resource type="Texture2D" uid="uid://c73wkwc2iey00" path="res://assets/sprites/space_background.jpg" id="1_qff8a"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="2_bqaxd"]
 [ext_resource type="PackedScene" uid="uid://cjo7e2pn2ld76" path="res://assets/meshes/craft_racer.glb" id="3_x2m0j"]
 [ext_resource type="Script" path="res://scripts/Engines.gd" id="4_7foyw"]
+[ext_resource type="Script" path="res://scripts/fuel.gd" id="6_rbte0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gp4yg"]
+bg_color = Color(0.333333, 0.705882, 0, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nx7s0"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_al74g"]
 
 [node name="World" type="Node3D"]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="FuelLabel" type="Label" parent="UI/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.333333, 0.705882, 0, 1)
+text = "Fuel: "
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/HBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="FuelBar" type="ProgressBar" parent="UI/HBoxContainer/VBoxContainer/MarginContainer" node_paths=PackedStringArray("fuel")]
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/fill = SubResource("StyleBoxFlat_gp4yg")
+step = 1.0
+show_percentage = false
+script = ExtResource("1_hv1n5")
+fuel = NodePath("../../../../../Player/Fuel")
 
 [node name="Space" type="Sprite3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, -4.37114e-07, 10, 0, -10, -4.37114e-07, -1.173, -1, -3.923)
@@ -31,10 +65,11 @@ camera = NodePath("../Camera3D")
 transform = Transform3D(4.5, 0, 0, 0, 4.5, 0, 0, 0, 4.5, 0, 0, 0)
 shape = SubResource("BoxShape3D_nx7s0")
 
-[node name="Engines" type="Node3D" parent="Player/craft_racer" node_paths=PackedStringArray("timer")]
+[node name="Engines" type="Node3D" parent="Player/craft_racer" node_paths=PackedStringArray("timer", "player")]
 visible = false
 script = ExtResource("4_7foyw")
 timer = NodePath("Timer")
+player = NodePath("../..")
 
 [node name="LeftEngine" type="MeshInstance3D" parent="Player/craft_racer/Engines"]
 transform = Transform3D(0.2, 0, 0, 0, -4.79951e-08, -0.2, 0, 1.098, -8.74228e-09, -0.328328, 0.227381, 1.43993)
@@ -47,3 +82,6 @@ mesh = SubResource("PrismMesh_al74g")
 
 [node name="Timer" type="Timer" parent="Player/craft_racer/Engines"]
 wait_time = 0.5
+
+[node name="Fuel" type="Node3D" parent="Player"]
+script = ExtResource("6_rbte0")
