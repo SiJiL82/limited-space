@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://bhp02k7rppku4"]
 
-[ext_resource type="Script" path="res://world.gd" id="1_a47ed"]
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_1puxw"]
 [ext_resource type="Script" path="res://scripts/FuelBar.gd" id="1_hv1n5"]
 [ext_resource type="Texture2D" uid="uid://c73wkwc2iey00" path="res://assets/sprites/space_background.jpg" id="1_qff8a"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="2_bqaxd"]
@@ -17,7 +17,7 @@ bg_color = Color(0.333333, 0.705882, 0, 1)
 
 [node name="World" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.57782, 0, 0.176666)
-script = ExtResource("1_a47ed")
+script = ExtResource("1_1puxw")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -65,7 +65,7 @@ script = ExtResource("2_bqaxd")
 camera = NodePath("../Camera3D")
 
 [node name="craft_racer" parent="Player" instance=ExtResource("3_x2m0j")]
-transform = Transform3D(4.5, 0, 0, 0, 4.5, 0, 0, 0, 4.5, 0, 0, 0)
+transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0)
 shape = SubResource("BoxShape3D_nx7s0")
 
 [node name="Engines" type="Node3D" parent="Player/craft_racer" node_paths=PackedStringArray("timer", "player")]

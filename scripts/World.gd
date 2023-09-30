@@ -1,6 +1,6 @@
 extends Node3D
 
-var StrandedAstronaut = preload("res://astronaut_floating.tscn")
+var StrandedAstronaut = preload("res://assets/Scenes/astronaut_floating.tscn")
 var rng = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
