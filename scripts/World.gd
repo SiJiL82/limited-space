@@ -30,5 +30,5 @@ func generate_random_location():
 		spawnX = rng.randf_range(-width, width)
 	while spawnZ > -10 and spawnZ < 10:
 		spawnZ = rng.randf_range(-height, height)
-	print(Vector3(spawnX, 0, spawnZ))
+	
 	return Vector3(spawnX, 0, spawnZ)

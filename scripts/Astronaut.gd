@@ -13,7 +13,5 @@ func _ready():
 	var z = randf_range(0, TAU)
 	rotation = Vector3(x, y, z)
 
-	
-
-func _process(delta):
+func _process(_delta):
 	rotate_object_local(rotate_direction, rotate_speed)
