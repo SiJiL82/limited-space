@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bhp02k7rppku4"]
+[gd_scene load_steps=8 format=3 uid="uid://cvcf51hvvtee8"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_a47ed"]
 [ext_resource type="Texture2D" uid="uid://c73wkwc2iey00" path="res://assets/sprites/space_background.jpg" id="1_qff8a"]
