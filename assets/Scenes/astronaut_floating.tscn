@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dhceg8hiqpuwa"]
 
-[ext_resource type="PackedScene" uid="uid://chyr1drd8ox03" path="res://assets/astronautA.glb" id="1_p3kgj"]
+[ext_resource type="PackedScene" uid="uid://chyr1drd8ox03" path="res://assets/meshes/astronautA.glb" id="1_71chj"]
 
 [sub_resource type="Animation" id="Animation_ijycn"]
 length = 0.001
@@ -139,7 +139,7 @@ _data = {
 [node name="astronautFloating" type="Node3D"]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 
-[node name="astronautA" parent="." instance=ExtResource("1_p3kgj")]
+[node name="astronautA" parent="." instance=ExtResource("1_71chj")]
 transform = Transform3D(1, 8.88177e-16, 2.98023e-08, 0, 1, -2.98023e-08, -2.98023e-08, 2.98023e-08, 1, 0, 0, 0)
 
 [node name="armLeft" parent="astronautA/tmpParent/astronautA2" index="0"]

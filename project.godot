@@ -11,13 +11,9 @@ config_version=5
 [application]
 
 config/name="Limited-space"
-run/main_scene="res://world.tscn"
+run/main_scene="res://assets/Scenes/world.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
-
-[autoload]
-
-Main="*res://main.gd"
 
 [display]
 
