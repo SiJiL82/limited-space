@@ -2,11 +2,13 @@ extends RigidBody3D
 
 @export var camera: Camera3D
 @export var thrust: int = 5
+@export var engine_particles: GPUParticles3D
 
 func _physics_process(delta):
 	look_at_mouse()
 	if Input.is_action_just_pressed("thruster"):
 		apply_thrust()
+
 
 func look_at_mouse():
 	var player_pos = global_transform.origin
