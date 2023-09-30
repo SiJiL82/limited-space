@@ -1,20 +1,52 @@
-[gd_scene load_steps=3 format=3 uid="uid://cvcf51hvvtee8"]
+[gd_scene load_steps=7 format=3 uid="uid://bhp02k7rppku4"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_a47ed"]
 [ext_resource type="Texture2D" uid="uid://c73wkwc2iey00" path="res://assets/sprites/space_background.jpg" id="1_qff8a"]
+[ext_resource type="Script" path="res://scripts/Player.gd" id="2_bqaxd"]
+[ext_resource type="PackedScene" uid="uid://cjo7e2pn2ld76" path="res://assets/meshes/craft_racer.glb" id="3_x2m0j"]
+[ext_resource type="Script" path="res://scripts/Engines.gd" id="4_7foyw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nx7s0"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_al74g"]
 
 [node name="World" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.57782, 0, 0.176666)
 script = ExtResource("1_a47ed")
 
+[node name="Space" type="Sprite3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, -4.37114e-07, 10, 0, -10, -4.37114e-07, -1.173, -1, -3.923)
+texture = ExtResource("1_qff8a")
+
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 150, 0)
 far = 500.0
 
-[node name="Space" type="Sprite3D" parent="."]
-transform = Transform3D(10, 0, 0, 0, -4.37114e-07, 10, 0, -10, -4.37114e-07, 0, 0, 0)
-texture = ExtResource("1_qff8a")
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 200, 0)
-light_energy = 5.364
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 200, 0)
+
+[node name="Player" type="RigidBody3D" parent="." node_paths=PackedStringArray("camera")]
+gravity_scale = 0.0
+script = ExtResource("2_bqaxd")
+camera = NodePath("../Camera3D")
+
+[node name="craft_racer" parent="Player" instance=ExtResource("3_x2m0j")]
+transform = Transform3D(4.5, 0, 0, 0, 4.5, 0, 0, 0, 4.5, 0, 0, 0)
+shape = SubResource("BoxShape3D_nx7s0")
+
+[node name="Engines" type="Node3D" parent="Player/craft_racer" node_paths=PackedStringArray("timer")]
+visible = false
+script = ExtResource("4_7foyw")
+timer = NodePath("Timer")
+
+[node name="LeftEngine" type="MeshInstance3D" parent="Player/craft_racer/Engines"]
+transform = Transform3D(0.2, 0, 0, 0, -4.79951e-08, -0.2, 0, 1.098, -8.74228e-09, -0.328328, 0.227381, 1.43993)
+mesh = SubResource("PrismMesh_al74g")
+skeleton = NodePath("../..")
+
+[node name="RightEngine" type="MeshInstance3D" parent="Player/craft_racer/Engines"]
+transform = Transform3D(0.2, 0, 0, 0, -4.37114e-08, -0.2, 0, 1, -8.74228e-09, 0.32, 0.22, 1.44)
+mesh = SubResource("PrismMesh_al74g")
+
+[node name="Timer" type="Timer" parent="Player/craft_racer/Engines"]
+wait_time = 0.5
