@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bhp02k7rppku4"]
+[gd_scene load_steps=14 format=3 uid="uid://bhp02k7rppku4"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_mp68m"]
 [ext_resource type="Script" path="res://scripts/FuelBar.gd" id="2_7praw"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cjo7e2pn2ld76" path="res://assets/meshes/craft_racer.glb" id="5_o38gu"]
 [ext_resource type="Script" path="res://scripts/Engines.gd" id="6_qj61n"]
 [ext_resource type="Script" path="res://scripts/Fuel.gd" id="7_t456d"]
+[ext_resource type="PackedScene" uid="uid://b3htof6nno8ja" path="res://assets/meshes/space_station.glb" id="8_jqhqs"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gp4yg"]
 bg_color = Color(0.333333, 0.705882, 0, 1)
@@ -18,10 +19,14 @@ bg_color = Color(0.333333, 0.705882, 0, 1)
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_wl3o5"]
 albedo_color = Color(1, 0.337255, 0.0980392, 1)
 
-[node name="World" type="Node3D"]
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_tssb0"]
+
+[node name="World" type="Node3D" node_paths=PackedStringArray("player", "player_spawn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.57782, 0, 0.176666)
 script = ExtResource("1_mp68m")
 num_astronauts = 10
+player = NodePath("Player")
+player_spawn = NodePath("SpaceStation/PlayerSpawn")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -64,6 +69,7 @@ far = 500.0
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 200, 0)
 
 [node name="Player" type="RigidBody3D" parent="." node_paths=PackedStringArray("camera")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.6728, 0, 36.6415)
 gravity_scale = 0.0
 script = ExtResource("4_wpgq8")
 camera = NodePath("../Camera3D")
@@ -95,3 +101,12 @@ wait_time = 0.5
 
 [node name="Fuel" type="Node3D" parent="Player"]
 script = ExtResource("7_t456d")
+
+[node name="SpaceStation" type="StaticBody3D" parent="."]
+
+[node name="space_station" parent="SpaceStation" instance=ExtResource("8_jqhqs")]
+transform = Transform3D(12, 0, 0, 0, 12, 0, 0, 0, 12, 8.34704, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_tssb0")
+
+[node name="PlayerSpawn" type="Node3D" parent="SpaceStation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.18587, 0, 30.1377)

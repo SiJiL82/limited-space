@@ -6,6 +6,7 @@ extends ProgressBar
 func _ready():
 	fuel.FuelChanged.connect(update_fuel_display)
 	max_value = fuel.fuel
+	value = max_value
 
 func update_fuel_display(_value):
 	value = _value

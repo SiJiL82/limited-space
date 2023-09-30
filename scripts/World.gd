@@ -1,6 +1,8 @@
 extends Node3D
 
 @export var num_astronauts: int = 4
+@export var player: RigidBody3D
+@export var player_spawn: Node3D
 
 var StrandedAstronaut = preload("res://assets/Scenes/astronaut_floating.tscn")
 var rng = RandomNumberGenerator.new()
@@ -8,6 +10,7 @@ var rng = RandomNumberGenerator.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	spawn_astronauts(num_astronauts)
+	position_player()
 
 func spawn_astronauts(astronauts_to_spawn):
 	for i in astronauts_to_spawn:
@@ -32,3 +35,7 @@ func generate_random_location():
 		spawnZ = rng.randf_range(-height, height)
 	
 	return Vector3(spawnX, 0, spawnZ)
+
+func position_player():
+	player.position = player_spawn.position
+	player.rotate_object_local(Vector3(0, 1, 0), deg_to_rad(90))
