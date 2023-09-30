@@ -9,74 +9,62 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("..:rotation")
+tracks/0/path = NodePath("tmpParent/astronautA2/armRight:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 5, 10),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(3.14159, 3.14159, 0), Vector3(6.28319, 6.28319, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("..:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 2.5, 7.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0.4, 0, 0), Vector3(-0.4, 0, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("tmpParent/astronautA2/armRight:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.5, 2, 3.5, 4.5, 5.7, 6.7, 7.7, 9.1),
 "transitions": PackedFloat32Array(1.07177, 1.07177, 1.07177, 1.07177, 1.07177, 1.07177, 1.07177, 1.07177, 1.07177),
 "update": 0,
 "values": [Vector3(3.14159, 0, 0.200713), Vector3(4.01426, 0, 0), Vector3(2.26893, 0, 0), Vector3(3.14159, 0, 0.10472), Vector3(4.01426, 0, 0.200713), Vector3(2.26893, 0, 0), Vector3(3.14159, 0, 0), Vector3(4.01426, 0, 0), Vector3(2.26893, 0, 0.200713)]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("tmpParent/astronautA2/armLeft:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("tmpParent/astronautA2/armLeft:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.5, 2, 3.5, 4.5, 5.7, 6.7, 7.7, 9.1),
 "transitions": PackedFloat32Array(1.18921, 1.18921, 1.18921, 1.18921, 1.18921, 1.18921, 1.18921, 1.18921, 1.18921),
 "update": 0,
 "values": [Vector3(3.14159, 0, 0), Vector3(2.61799, 0, 0), Vector3(4.01426, 0, -0.200713), Vector3(3.14159, 0, -0.200713), Vector3(2.61799, 0, -0.10472), Vector3(4.01426, 0, 0), Vector3(3.14159, 0, 0), Vector3(2.61799, 0, 0), Vector3(4.01426, 0, 0)]
 }
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("tmpParent/astronautA2/legLeft:rotation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("tmpParent/astronautA2/legLeft:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0, 3.1, 8),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(-0.523599, 0, 0), Vector3(0.523599, 0, 0)]
 }
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("tmpParent/astronautA2/legRight:rotation")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("tmpParent/astronautA2/legRight:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0, 3.1, 8),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(0.523599, 0, 0), Vector3(-0.523599, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 5, 10),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(2.98023e-08, 2.98023e-08, 0), Vector3(3.14159, 3.14159, 0), Vector3(6.28319, 6.28319, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_ijycn"]
@@ -84,74 +72,62 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("..:rotation")
+tracks/0/path = NodePath("tmpParent/astronautA2/armRight:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 0, 0)]
+"values": [Vector3(3.14159, 0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("..:position")
+tracks/1/path = NodePath("tmpParent/astronautA2/armLeft:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 0, 0)]
+"values": [Vector3(3.14159, 0, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("tmpParent/astronautA2/armRight:rotation")
+tracks/2/path = NodePath("tmpParent/astronautA2/legLeft:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(3.14159, 0, 0)]
+"values": [Vector3(0, 0, 0)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("tmpParent/astronautA2/armLeft:rotation")
+tracks/3/path = NodePath("tmpParent/astronautA2/legRight:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(3.14159, 0, 0)]
+"values": [Vector3(0, 0, 0)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("tmpParent/astronautA2/legLeft:rotation")
+tracks/4/path = NodePath(".:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("tmpParent/astronautA2/legRight:rotation")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
+"values": [Vector3(2.98023e-08, 2.98023e-08, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7cn42"]
@@ -161,9 +137,10 @@ _data = {
 }
 
 [node name="astronautFloating" type="Node3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 
 [node name="astronautA" parent="." instance=ExtResource("1_p3kgj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.99759, -0.0184532, -1.49302)
+transform = Transform3D(1, 8.88179e-16, 2.98023e-08, 0, 1, -2.98023e-08, -2.98023e-08, 2.98023e-08, 1, 0, 0, 0)
 
 [node name="armLeft" parent="astronautA/tmpParent/astronautA2" index="0"]
 transform = Transform3D(0.8584, 0, 0, 0, -0.8584, 7.50437e-08, 0, -7.50437e-08, -0.8584, -0.13, 0.473184, 0)
