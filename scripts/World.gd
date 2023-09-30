@@ -23,6 +23,12 @@ func spawn_astronaut():
 func generate_random_location():
 	var width = -180
 	var height = -100
-	var spawnX = rng.randf_range(-width, width)
-	var spawnZ = rng.randf_range(-height, height)
+	var spawnX = 0
+	var spawnZ = 0
+
+	while spawnX > -20 and spawnX < 20:
+		spawnX = rng.randf_range(-width, width)
+	while spawnZ > -10 and spawnZ < 10:
+		spawnZ = rng.randf_range(-height, height)
+	print(Vector3(spawnX, 0, spawnZ))
 	return Vector3(spawnX, 0, spawnZ)
