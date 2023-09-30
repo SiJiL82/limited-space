@@ -66,7 +66,7 @@ script = ExtResource("4_wpgq8")
 camera = NodePath("../Camera3D")
 
 [node name="craft_racer" parent="Player" instance=ExtResource("5_o38gu")]
-transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0)
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
 shape = SubResource("BoxShape3D_nx7s0")
 
 [node name="Engines" type="Node3D" parent="Player/craft_racer" node_paths=PackedStringArray("timer", "player")]
