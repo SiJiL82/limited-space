@@ -109,4 +109,4 @@ transform = Transform3D(12, 0, 0, 0, 12, 0, 0, 0, 12, 8.34704, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_tssb0")
 
 [node name="PlayerSpawn" type="Node3D" parent="SpaceStation"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.18587, 0, 27.2142)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.18587, 0, 30.1377)
