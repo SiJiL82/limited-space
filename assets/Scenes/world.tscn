@@ -18,6 +18,7 @@ bg_color = Color(0.333333, 0.705882, 0, 1)
 [node name="World" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.57782, 0, 0.176666)
 script = ExtResource("1_mp68m")
+num_astronauts = 10
 
 [node name="UI" type="CanvasLayer" parent="."]
 

@@ -1,11 +1,13 @@
 extends Node3D
 
+@export var num_astronauts: int = 4
+
 var StrandedAstronaut = preload("res://assets/Scenes/astronaut_floating.tscn")
 var rng = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	spawn_astronauts(4)
+	spawn_astronauts(num_astronauts)
 
 func spawn_astronauts(astronauts_to_spawn):
 	for i in astronauts_to_spawn:
