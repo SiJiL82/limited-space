@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b147mxhgk16m0"
-path="res://.godot/imported/craft_cargoB.glb-a308d6b4536b62f07c6f3ea57cc73011.scn"
+uid="uid://cjo7e2pn2ld76"
+path="res://.godot/imported/craft_racer.glb-e792bf96cadf34adb91d0707cf737201.scn"
 
 [deps]
 
-source_file="res://assets/meshes/craft_cargoB.glb"
-dest_files=["res://.godot/imported/craft_cargoB.glb-a308d6b4536b62f07c6f3ea57cc73011.scn"]
+source_file="res://assets/meshes/craft_racer.glb"
+dest_files=["res://.godot/imported/craft_racer.glb-e792bf96cadf34adb91d0707cf737201.scn"]
 
 [params]
 
