@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scripts/Player.gd" id="2_bqaxd"]
 [ext_resource type="PackedScene" uid="uid://cjo7e2pn2ld76" path="res://assets/meshes/craft_racer.glb" id="3_x2m0j"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_aqu6q"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_qqosh"]
 
 [node name="World" type="Node3D"]
 
@@ -23,8 +23,6 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 200
 script = ExtResource("2_bqaxd")
 camera = NodePath("../Camera3D")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-shape = SubResource("BoxShape3D_aqu6q")
-
 [node name="craft_racer" parent="Player" instance=ExtResource("3_x2m0j")]
 transform = Transform3D(4.5, 0, 0, 0, 4.5, 0, 0, 0, 4.5, 0, 0, 0)
+shape = SubResource("BoxShape3D_qqosh")

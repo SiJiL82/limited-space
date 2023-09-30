@@ -1,9 +1,12 @@
 extends CharacterBody3D
 
+@export var camera: Camera3D
+@export var thrust: int = 100
+
 func _physics_process(delta):
 	look_at_mouse()
 
-@export var camera: Camera3D
+
 
 func look_at_mouse():
 	var player_pos = global_transform.origin

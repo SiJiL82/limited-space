@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/craft_racer.glb-e792bf96cadf34adb91d0707cf737
 
 [params]
 
-nodes/root_type="Node3D"
+nodes/root_type="CollisionShape3D"
 nodes/root_name="Scene Root"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
