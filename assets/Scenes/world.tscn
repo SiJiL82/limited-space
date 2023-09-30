@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bhp02k7rppku4"]
+[gd_scene load_steps=12 format=3 uid="uid://bhp02k7rppku4"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_mp68m"]
 [ext_resource type="Script" path="res://scripts/FuelBar.gd" id="2_7praw"]
@@ -14,6 +14,9 @@ bg_color = Color(0.333333, 0.705882, 0, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_nx7s0"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_al74g"]
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_wl3o5"]
+albedo_color = Color(1, 0.337255, 0.0980392, 1)
 
 [node name="World" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.57782, 0, 0.176666)
@@ -70,19 +73,22 @@ transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
 shape = SubResource("BoxShape3D_nx7s0")
 
 [node name="Engines" type="Node3D" parent="Player/craft_racer" node_paths=PackedStringArray("timer", "player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0579112, 0)
 visible = false
 script = ExtResource("6_qj61n")
 timer = NodePath("Timer")
 player = NodePath("../..")
 
 [node name="LeftEngine" type="MeshInstance3D" parent="Player/craft_racer/Engines"]
-transform = Transform3D(0.2, 0, 0, 0, -4.79951e-08, -0.2, 0, 1.098, -8.74228e-09, -0.328328, 0.227381, 1.43993)
+transform = Transform3D(0.2, 0, 0, 0, -4.79951e-08, -0.2, 0, 1.098, -8.74228e-09, -0.325827, 0.227381, 1.43856)
 mesh = SubResource("PrismMesh_al74g")
 skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ORMMaterial3D_wl3o5")
 
 [node name="RightEngine" type="MeshInstance3D" parent="Player/craft_racer/Engines"]
 transform = Transform3D(0.2, 0, 0, 0, -4.37114e-08, -0.2, 0, 1, -8.74228e-09, 0.32, 0.22, 1.44)
 mesh = SubResource("PrismMesh_al74g")
+surface_material_override/0 = SubResource("ORMMaterial3D_wl3o5")
 
 [node name="Timer" type="Timer" parent="Player/craft_racer/Engines"]
 wait_time = 0.5
