@@ -1,12 +1,12 @@
 [gd_scene load_steps=11 format=3 uid="uid://bhp02k7rppku4"]
 
-[ext_resource type="Script" path="res://scripts/FuelBar.gd" id="1_hv1n5"]
-[ext_resource type="Script" path="res://scripts/World.gd" id="1_pelcp"]
-[ext_resource type="Texture2D" uid="uid://c73wkwc2iey00" path="res://assets/sprites/space_background.jpg" id="1_qff8a"]
-[ext_resource type="Script" path="res://scripts/Player.gd" id="2_bqaxd"]
-[ext_resource type="PackedScene" uid="uid://cjo7e2pn2ld76" path="res://assets/meshes/craft_racer.glb" id="3_x2m0j"]
-[ext_resource type="Script" path="res://scripts/Engines.gd" id="4_7foyw"]
-[ext_resource type="Script" path="res://scripts/fuel.gd" id="6_rbte0"]
+[ext_resource type="Script" path="res://scripts/World.gd" id="1_mp68m"]
+[ext_resource type="Script" path="res://scripts/FuelBar.gd" id="2_7praw"]
+[ext_resource type="Texture2D" uid="uid://c73wkwc2iey00" path="res://assets/sprites/space_background.jpg" id="3_gxbaj"]
+[ext_resource type="Script" path="res://scripts/Player.gd" id="4_wpgq8"]
+[ext_resource type="PackedScene" uid="uid://cjo7e2pn2ld76" path="res://assets/meshes/craft_racer.glb" id="5_o38gu"]
+[ext_resource type="Script" path="res://scripts/Engines.gd" id="6_qj61n"]
+[ext_resource type="Script" path="res://scripts/Fuel.gd" id="7_t456d"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gp4yg"]
 bg_color = Color(0.333333, 0.705882, 0, 1)
@@ -17,7 +17,7 @@ bg_color = Color(0.333333, 0.705882, 0, 1)
 
 [node name="World" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.57782, 0, 0.176666)
-script = ExtResource("1_pelcp")
+script = ExtResource("1_mp68m")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -45,12 +45,12 @@ size_flags_vertical = 3
 theme_override_styles/fill = SubResource("StyleBoxFlat_gp4yg")
 step = 1.0
 show_percentage = false
-script = ExtResource("1_hv1n5")
+script = ExtResource("2_7praw")
 fuel = NodePath("../../../../../Player/Fuel")
 
 [node name="Space" type="Sprite3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, -4.37114e-07, 10, 0, -10, -4.37114e-07, -1.173, -1, -3.923)
-texture = ExtResource("1_qff8a")
+texture = ExtResource("3_gxbaj")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 150, 0)
@@ -61,16 +61,16 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 200
 
 [node name="Player" type="RigidBody3D" parent="." node_paths=PackedStringArray("camera")]
 gravity_scale = 0.0
-script = ExtResource("2_bqaxd")
+script = ExtResource("4_wpgq8")
 camera = NodePath("../Camera3D")
 
-[node name="craft_racer" parent="Player" instance=ExtResource("3_x2m0j")]
+[node name="craft_racer" parent="Player" instance=ExtResource("5_o38gu")]
 transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0)
 shape = SubResource("BoxShape3D_nx7s0")
 
 [node name="Engines" type="Node3D" parent="Player/craft_racer" node_paths=PackedStringArray("timer", "player")]
 visible = false
-script = ExtResource("4_7foyw")
+script = ExtResource("6_qj61n")
 timer = NodePath("Timer")
 player = NodePath("../..")
 
@@ -87,4 +87,4 @@ mesh = SubResource("PrismMesh_al74g")
 wait_time = 0.5
 
 [node name="Fuel" type="Node3D" parent="Player"]
-script = ExtResource("6_rbte0")
+script = ExtResource("7_t456d")
