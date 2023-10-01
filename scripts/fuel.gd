@@ -1,11 +1,13 @@
 extends Node3D
 
-@export var fuel: int = 20
-var max_fuel = fuel;
+@export var max_fuel: int = 20
+var fuel
 var refuel_values = [0, 10, 15, 20]
 
 func _ready():
+	reset_fuel()
 	Messenger.FUEL_MAXFUELSET.emit(fuel)
+	Messenger.LOSEPANEL_RESETGAME.connect(reset_fuel)
 	Messenger.PLAYER_DROPOFFASTRONAUT.connect(add_fuel)
 
 
@@ -21,6 +23,9 @@ func has_fuel() -> bool:
 	if fuel > 0:
 		return true
 	return false
+
+func reset_fuel():
+	fuel = max_fuel
 
 func add_fuel(astronauts_in_storage):
 	var fuel_to_add = refuel_values[astronauts_in_storage]

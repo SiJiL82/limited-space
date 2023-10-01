@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bhp02k7rppku4"]
+[gd_scene load_steps=35 format=3 uid="uid://bhp02k7rppku4"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_mp68m"]
 [ext_resource type="Script" path="res://scripts/FuelBar.gd" id="2_7praw"]
@@ -9,6 +9,7 @@
 [ext_resource type="FontFile" uid="uid://bifu74iphowgq" path="res://assets/fonts/Dashhorizon-eZ5wg.otf" id="3_qi70f"]
 [ext_resource type="FontFile" uid="uid://by8pfvbuu5tgi" path="res://assets/fonts/Cartesian-0W5Oo.otf" id="4_ac5o1"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="4_wpgq8"]
+[ext_resource type="StyleBox" uid="uid://bfjhnulbioouc" path="res://assets/styles/infopanel.tres" id="5_48g4y"]
 [ext_resource type="Script" path="res://scripts/ScoreLabel.gd" id="5_h10br"]
 [ext_resource type="Script" path="res://scripts/Score.gd" id="5_nob05"]
 [ext_resource type="PackedScene" uid="uid://cjo7e2pn2ld76" path="res://assets/meshes/craft_racer.glb" id="5_o38gu"]
@@ -17,6 +18,8 @@
 [ext_resource type="Script" path="res://scripts/Engines.gd" id="6_qj61n"]
 [ext_resource type="Script" path="res://scripts/Fuel.gd" id="7_t456d"]
 [ext_resource type="PackedScene" uid="uid://b3htof6nno8ja" path="res://assets/meshes/space_station.glb" id="8_jqhqs"]
+[ext_resource type="Script" path="res://scripts/LosePanel.gd" id="11_ily60"]
+[ext_resource type="Script" path="res://scripts/PlayAgainButton.gd" id="12_4bssr"]
 [ext_resource type="Script" path="res://scripts/Storage.gd" id="15_cgb2n"]
 [ext_resource type="PackedScene" uid="uid://c17qidxx46kx" path="res://assets/meshes/platform_large.glb" id="17_t5ymh"]
 [ext_resource type="Script" path="res://scripts/RescuePlatform.gd" id="17_ywrmo"]
@@ -31,13 +34,6 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
 [sub_resource type="LabelSettings" id="LabelSettings_bal5q"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b02f5"]
-bg_color = Color(0.411765, 0.4, 0.4, 0.960784)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nx7s0"]
 
@@ -135,7 +131,7 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_b02f5")
+theme_override_styles/panel = ExtResource("5_48g4y")
 script = ExtResource("3_g5aw0")
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/StartPanel"]
@@ -180,12 +176,12 @@ autowrap_mode = 3
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Button" type="Button" parent="UI/StartPanel/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="PlayButton" type="Button" parent="UI/StartPanel/MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 theme_override_colors/font_color = Color(0, 0.658824, 0.117647, 1)
-theme_override_colors/font_pressed_color = Color(0, 0.403673, 0.0559363, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.403922, 0.054902, 1)
 theme_override_colors/font_hover_color = Color(0, 0.964706, 0.192157, 1)
 theme_override_fonts/font = ExtResource("4_ac5o1")
 theme_override_font_sizes/font_size = 64
@@ -196,6 +192,79 @@ theme_override_styles/disabled = ExtResource("6_jl3e4")
 theme_override_styles/focus = ExtResource("6_jl3e4")
 text = "Play"
 script = ExtResource("6_50lxo")
+
+[node name="LosePanel" type="Panel" parent="UI"]
+visible = false
+custom_minimum_size = Vector2(800, 600)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("5_48g4y")
+script = ExtResource("11_ily60")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/LosePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/LosePanel/MarginContainer"]
+layout_mode = 2
+
+[node name="GameOverLabel" type="Label" parent="UI/LosePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.945098, 1, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_qi70f")
+theme_override_font_sizes/font_size = 64
+text = "Game Over"
+horizontal_alignment = 1
+
+[node name="GameOverDescription" type="Label" parent="UI/LosePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 18
+text = "You ran out of fuel, and are stranded just like the workers you were trying to rescue.
+
+You hold onto the hope that someone will be able to come and rescue you before your oxygen runs out.
+
+Your colleagues won't be so lucky."
+autowrap_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/LosePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PlayAgainButton" type="Button" parent="UI/LosePanel/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_colors/font_color = Color(0, 0.658824, 0.117647, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.403922, 0.054902, 1)
+theme_override_colors/font_hover_color = Color(0, 0.964706, 0.192157, 1)
+theme_override_fonts/font = ExtResource("4_ac5o1")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = ExtResource("6_jl3e4")
+theme_override_styles/hover = ExtResource("6_jl3e4")
+theme_override_styles/pressed = ExtResource("6_jl3e4")
+theme_override_styles/disabled = ExtResource("6_jl3e4")
+theme_override_styles/focus = ExtResource("6_jl3e4")
+text = "Play again"
+script = ExtResource("12_4bssr")
 
 [node name="Space" type="Sprite3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, -4.37114e-07, 10, 0, -10, -4.37114e-07, -1.173, -5, -3.923)

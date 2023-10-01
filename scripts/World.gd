@@ -9,8 +9,8 @@ var rng = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	spawn_astronauts(num_astronauts)
-	position_player()
+	Messenger.LOSEPANEL_RESETGAME.connect(init_game)
+	init_game()
 
 func spawn_astronauts(astronauts_to_spawn):
 	for i in astronauts_to_spawn:
@@ -39,3 +39,12 @@ func generate_random_location():
 func position_player():
 	player.position = player_spawn.position
 	player.rotate_object_local(Vector3(0, 1, 0), deg_to_rad(90))
+
+func remove_astronauts():
+	for astronaut in get_tree().get_nodes_in_group("Astronauts"):
+		astronaut.queue_free()
+
+func init_game():
+	remove_astronauts()
+	spawn_astronauts(num_astronauts)
+	position_player()
