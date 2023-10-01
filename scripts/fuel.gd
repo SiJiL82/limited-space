@@ -2,7 +2,8 @@ extends Node3D
 
 @export var fuel: int = 20
 
-signal FuelChanged(fuel)
+func _ready():
+	Messenger.MaxFuelSet.emit(fuel)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -10,7 +11,7 @@ func _process(_delta):
 		# Check if we have fuel, decrement it if so
 		if has_fuel():
 			fuel -= 1
-			FuelChanged.emit(fuel)
+			Messenger.FuelChanged.emit(fuel)
 
 func has_fuel() -> bool:
 	if fuel > 0:
