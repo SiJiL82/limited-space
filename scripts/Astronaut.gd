@@ -10,6 +10,6 @@ func _process(_delta):
 	rotate_object_local(rotate_direction, rotate_speed)
 
 func _board_player_ship(ship:Node3D):
-	if ship.has_space:
+	print("Hit astronaut")
+	if ship.pickup_astronaut():
 		get_owner().queue_free()
-		ship.pickup_astronaut()

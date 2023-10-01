@@ -1,4 +1,7 @@
 extends Node
 
-signal FuelChanged(_value)
-signal MaxFuelSet(_value)
+signal FUEL_FUELCHANGED(_value)
+signal FUEL_MAXFUELSET(_value)
+signal STARTPANEL_STARTGAME()
+signal PLAYER_THRUSTAPPLIED()
+signal PLAYER_PICKEDUPASTRONAUT()
