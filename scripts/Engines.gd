@@ -8,5 +8,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func show_engines():
+	$booster.play()
 	visible = true
 	timer.start(0.5)

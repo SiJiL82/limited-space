@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bhp02k7rppku4"]
+[gd_scene load_steps=35 format=3 uid="uid://bhp02k7rppku4"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_mp68m"]
 [ext_resource type="Script" path="res://scripts/FuelBar.gd" id="2_7praw"]
@@ -20,6 +20,8 @@
 [ext_resource type="Script" path="res://scripts/Storage.gd" id="15_cgb2n"]
 [ext_resource type="PackedScene" uid="uid://c17qidxx46kx" path="res://assets/meshes/platform_large.glb" id="17_t5ymh"]
 [ext_resource type="Script" path="res://scripts/RescuePlatform.gd" id="17_ywrmo"]
+[ext_resource type="AudioStream" uid="uid://ygrjipgt4ik1" path="res://assets/audio/sfx/203264__metrostock99__rocket-booster-raw-editable.ogg" id="18_h70dx"]
+[ext_resource type="AudioStream" uid="uid://dldyuvim8jrbn" path="res://assets/audio/sfx/396649__matrixxx__space-atmosphere-02.ogg" id="22_l1fk6"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v2h0u"]
 
@@ -197,6 +199,8 @@ theme_override_styles/focus = ExtResource("6_jl3e4")
 text = "Play"
 script = ExtResource("6_50lxo")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="UI/StartPanel"]
+
 [node name="Space" type="Sprite3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, -4.37114e-07, 10, 0, -10, -4.37114e-07, -1.173, -5, -3.923)
 texture = ExtResource("3_gxbaj")
@@ -238,6 +242,11 @@ surface_material_override/0 = SubResource("ORMMaterial3D_wl3o5")
 [node name="EngineShowTimer" type="Timer" parent="Player/craft_racer/Engines"]
 wait_time = 0.5
 
+[node name="booster" type="AudioStreamPlayer" parent="Player/craft_racer/Engines"]
+stream = ExtResource("18_h70dx")
+volume_db = -6.0
+bus = &"SoundFX"
+
 [node name="Fuel" type="Node3D" parent="Player"]
 script = ExtResource("7_t456d")
 
@@ -277,5 +286,10 @@ transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, -7.87616, -2.03156, 15.2888)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RescuePlatform/RescueArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.37374, 5.67789, 28.5927)
 shape = SubResource("BoxShape3D_8gqvo")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("22_l1fk6")
+autoplay = true
+bus = &"Atmosphere"
 
 [connection signal="area_entered" from="RescuePlatform/RescueArea" to="Player" method="_on_rescue_area_area_entered"]
