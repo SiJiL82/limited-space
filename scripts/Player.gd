@@ -50,6 +50,7 @@ func apply_thrust():
 
 func pickup_astronaut(astronaut):
 	if storage.has_space():
+		$pick_up_fx.play()
 		Messenger.PLAYER_PICKEDUPASTRONAUT.emit()
 		astronaut.queue_free()
 
@@ -62,7 +63,8 @@ func is_close_to_zero(value) -> bool:
 		return true
 	return false
 
-func _on_rescue_area_area_entered(_area):	
+func _on_rescue_area_area_entered(_area):
+	
 	if storage.get_value():
 		unloading_astronauts = true
 
@@ -70,7 +72,11 @@ func move_to_rescue_area():
 	var target_direction = transform.origin.direction_to(rescue_point.global_position)
 	var target_distance = transform.origin.distance_to(rescue_point.global_position)
 	linear_velocity = target_direction.normalized() * 4
+	if !$landing.is_playing():
+		Messenger.PLAYER_STOPENGINE.emit()
+		$landing.play()
 	if target_distance < 1.0:
 		linear_velocity = Vector3.ZERO
 		Messenger.PLAYER_DROPOFFASTRONAUT.emit(storage.get_value())
 		unloading_astronauts = false
+		$drop_off_fx.play()

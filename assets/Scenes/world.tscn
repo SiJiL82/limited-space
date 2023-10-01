@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bhp02k7rppku4"]
+[gd_scene load_steps=41 format=3 uid="uid://bhp02k7rppku4"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_mp68m"]
 [ext_resource type="Script" path="res://scripts/FuelBar.gd" id="2_7praw"]
@@ -9,7 +9,7 @@
 [ext_resource type="FontFile" uid="uid://bifu74iphowgq" path="res://assets/fonts/Dashhorizon-eZ5wg.otf" id="3_qi70f"]
 [ext_resource type="FontFile" uid="uid://by8pfvbuu5tgi" path="res://assets/fonts/Cartesian-0W5Oo.otf" id="4_ac5o1"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="4_wpgq8"]
-[ext_resource type="StyleBox" uid="uid://bfjhnulbioouc" path="res://assets/styles/infopanel.tres" id="5_48g4y"]
+[ext_resource type="StyleBox" path="res://assets/styles/infopanel.tres" id="5_48g4y"]
 [ext_resource type="Script" path="res://scripts/ScoreLabel.gd" id="5_h10br"]
 [ext_resource type="Script" path="res://scripts/Score.gd" id="5_nob05"]
 [ext_resource type="PackedScene" uid="uid://cjo7e2pn2ld76" path="res://assets/meshes/craft_racer.glb" id="5_o38gu"]
@@ -24,8 +24,12 @@
 [ext_resource type="PackedScene" uid="uid://c17qidxx46kx" path="res://assets/meshes/platform_large.glb" id="17_t5ymh"]
 [ext_resource type="Script" path="res://scripts/RescuePlatform.gd" id="17_ywrmo"]
 [ext_resource type="AudioStream" uid="uid://ygrjipgt4ik1" path="res://assets/audio/sfx/203264__metrostock99__rocket-booster-raw-editable.ogg" id="18_h70dx"]
+[ext_resource type="Material" path="res://assets/styles/engines.tres" id="19_5lsfv"]
 [ext_resource type="AudioStream" uid="uid://dldyuvim8jrbn" path="res://assets/audio/sfx/396649__matrixxx__space-atmosphere-02.ogg" id="22_l1fk6"]
-[ext_resource type="Material" uid="uid://chgfg27gqh1l4" path="res://assets/styles/engines.tres" id="19_5lsfv"]
+[ext_resource type="AudioStream" uid="uid://d6nsk5acnpr" path="res://assets/audio/sfx/pickup-sting.ogg" id="23_ebxa8"]
+[ext_resource type="AudioStream" uid="uid://c242nk105qnlp" path="res://assets/audio/sfx/dropoff-sting.ogg" id="24_e5sog"]
+[ext_resource type="AudioStream" uid="uid://d2qem2so5hyhk" path="res://assets/audio/sfx/520555__aj_heels__desertplanetlanding.ogg" id="25_gca2q"]
+[ext_resource type="AudioStream" uid="uid://b30dsobqea364" path="res://assets/audio/sfx/engine.ogg" id="27_ak7yy"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v2h0u"]
 
@@ -194,6 +198,7 @@ text = "Play"
 script = ExtResource("6_50lxo")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="UI/StartPanel"]
+
 [node name="LosePanel" type="Panel" parent="UI"]
 visible = false
 custom_minimum_size = Vector2(800, 600)
@@ -315,8 +320,11 @@ wait_time = 0.5
 
 [node name="booster" type="AudioStreamPlayer" parent="Player/craft_racer/Engines"]
 stream = ExtResource("18_h70dx")
-volume_db = -6.0
-bus = &"SoundFX"
+volume_db = -12.479
+
+[node name="engine" type="AudioStreamPlayer" parent="Player/craft_racer/Engines"]
+stream = ExtResource("27_ak7yy")
+volume_db = -20.0
 
 [node name="Fuel" type="Node3D" parent="Player"]
 script = ExtResource("7_t456d")
@@ -329,6 +337,19 @@ shape = SubResource("BoxShape3D_rm0l6")
 
 [node name="Storage" type="Node3D" parent="Player"]
 script = ExtResource("15_cgb2n")
+
+[node name="pick_up_fx" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource("23_ebxa8")
+volume_db = -17.731
+
+[node name="drop_off_fx" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource("24_e5sog")
+volume_db = -17.415
+
+[node name="landing" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource("25_gca2q")
+volume_db = -15.0
+bus = &"SFX"
 
 [node name="SpaceStation" type="StaticBody3D" parent="."]
 
@@ -358,11 +379,12 @@ transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, -7.87616, -2.03156, 15.2888)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.37374, 5.67789, 28.5927)
 shape = SubResource("BoxShape3D_8gqvo")
 
+[node name="RescuePoint" type="Node3D" parent="RescuePlatform/RescueArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.17219, 0, 27.3096)
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("22_l1fk6")
 autoplay = true
-bus = &"Atmosphere"
-[node name="RescuePoint" type="Node3D" parent="RescuePlatform/RescueArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.17219, 0, 27.3096)
+bus = &"Atmos"
 
 [connection signal="area_entered" from="RescuePlatform/RescueArea" to="Player" method="_on_rescue_area_area_entered"]
