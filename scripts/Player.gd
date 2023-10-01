@@ -33,10 +33,10 @@ func _physics_process(_delta):
 			check_for_lose_conditions()
 
 func init_player(player_spawn):
-	game_active = false
 	player_started_game = false
 	position = player_spawn
-	rotate_object_local(Vector3(0, 1, 0), deg_to_rad(90))
+	unloading_astronauts = false
+	game_active = true
 
 func look_at_mouse():
 	var player_pos = global_transform.origin
