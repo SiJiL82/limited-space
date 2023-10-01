@@ -419,7 +419,7 @@ wait_time = 0.5
 
 [node name="booster" type="AudioStreamPlayer" parent="Player/craft_racer/Engines"]
 stream = ExtResource("18_h70dx")
-volume_db = -15.889
+volume_db = -20.663
 bus = &"SFX"
 
 [node name="engine" type="AudioStreamPlayer" parent="Player/craft_racer/Engines"]
@@ -485,9 +485,11 @@ shape = SubResource("BoxShape3D_8gqvo")
 [node name="RescuePoint" type="Node3D" parent="RescuePlatform/RescueArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.17219, 0, 27.3096)
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Atmosphere" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("22_l1fk6")
+volume_db = -7.843
 autoplay = true
+bus = &"Atmos"
 
 [node name="Score" type="Node3D" parent="."]
 script = ExtResource("5_nob05")
