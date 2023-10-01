@@ -10,13 +10,15 @@ extends RigidBody3D
 var fuel: Node3D
 var game_active: bool = false
 var unloading_astronauts: bool = false
-var is_docked: bool = false
+var player_started_game = false
 
 func _ready():
 	fuel = get_node("Fuel")
+	Messenger.WORLD_INITGAME.connect(init_player)
 	Messenger.STARTPANEL_STARTGAME.connect(func(): game_active = true)
 	Messenger.ASTRONAUT_COLLIDED.connect(pickup_astronaut)
 	Messenger.LOSEPANEL_RESETGAME.connect(func(): linear_velocity = Vector3.ZERO)
+	Messenger.WORLD_ENDGAME.connect(func(): game_active = false)
 
 func _physics_process(_delta):
 	if game_active:
@@ -25,9 +27,16 @@ func _physics_process(_delta):
 		else:
 			look_at_mouse()
 			if Input.is_action_just_pressed("thruster"):
+				player_started_game = true
 				if fuel.has_fuel():
 					apply_thrust()
 			check_for_lose_conditions()
+
+func init_player(player_spawn):
+	game_active = false
+	player_started_game = false
+	position = player_spawn
+	rotate_object_local(Vector3(0, 1, 0), deg_to_rad(90))
 
 func look_at_mouse():
 	var player_pos = global_transform.origin
@@ -70,6 +79,9 @@ func _on_rescue_area_area_entered(_area):
 	if storage.get_value():
 		unloading_astronauts = true
 
+func _on_rescue_area_area_exited(_area):
+	Messenger.PLAYER_LEFTRESCUEAREA.emit()
+
 func move_to_rescue_area():
 	var target_direction = transform.origin.direction_to(rescue_point.global_position)
 	var target_distance = transform.origin.distance_to(rescue_point.global_position)
@@ -78,7 +90,7 @@ func move_to_rescue_area():
 		linear_velocity = Vector3.ZERO
 		Messenger.PLAYER_DROPOFFASTRONAUT.emit(storage.get_value())
 		unloading_astronauts = false
-
+		Messenger.PLAYER_ENTEREDRESCUEAREA.emit()
 
 func check_if_out_of_bounds():
 	var top_left = camera.project_position(Vector2(0,0), 150)

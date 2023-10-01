@@ -4,12 +4,17 @@ extends Node3D
 @export var player: RigidBody3D
 @export var player_spawn: Node3D
 
+@onready var timer = $EndGameTimer
+
 var StrandedAstronaut = preload("res://assets/Scenes/astronaut_floating.tscn")
 var rng = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Messenger.LOSEPANEL_RESETGAME.connect(init_game)
+	Messenger.PLAYER_ENTEREDRESCUEAREA.connect(start_game_over_timer)
+	Messenger.PLAYER_LEFTRESCUEAREA.connect(reset_game_over_timer)
+	timer.connect("timeout", end_game)
 	init_game()
 
 func spawn_astronauts(astronauts_to_spawn):
@@ -39,10 +44,6 @@ func generate_random_location():
 	
 	return Vector3(spawnX, 0, spawnZ)
 
-func position_player():
-	player.position = player_spawn.position
-	player.rotate_object_local(Vector3(0, 1, 0), deg_to_rad(90))
-
 func remove_astronauts():
 	for astronaut in get_tree().get_nodes_in_group("Astronauts"):
 		astronaut.queue_free()
@@ -50,4 +51,16 @@ func remove_astronauts():
 func init_game():
 	remove_astronauts()
 	spawn_astronauts(num_astronauts)
-	position_player()
+	Messenger.WORLD_INITGAME.emit(player_spawn.position)
+
+func start_game_over_timer():
+	var timer_value: int = 10
+	timer.start(timer_value)
+	Messenger.WORLD_ENDGAMETIMERSTARTED.emit(timer)
+
+func reset_game_over_timer():
+	timer.stop()
+	Messenger.WORLD_ENDGAMETIMERSTOPPED.emit()
+
+func end_game():
+	Messenger.WORLD_ENDGAME.emit()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bhp02k7rppku4"]
+[gd_scene load_steps=36 format=3 uid="uid://bhp02k7rppku4"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_mp68m"]
 [ext_resource type="Script" path="res://scripts/FuelBar.gd" id="2_7praw"]
@@ -21,6 +21,7 @@
 [ext_resource type="Script" path="res://scripts/LosePanel.gd" id="11_ily60"]
 [ext_resource type="Script" path="res://scripts/PlayAgainButton.gd" id="12_4bssr"]
 [ext_resource type="Script" path="res://scripts/Storage.gd" id="15_cgb2n"]
+[ext_resource type="Script" path="res://scripts/EndGameProgressBar.gd" id="15_qeusc"]
 [ext_resource type="PackedScene" uid="uid://c17qidxx46kx" path="res://assets/meshes/platform_large.glb" id="17_t5ymh"]
 [ext_resource type="Script" path="res://scripts/RescuePlatform.gd" id="17_ywrmo"]
 [ext_resource type="Material" uid="uid://chgfg27gqh1l4" path="res://assets/styles/engines.tres" id="19_5lsfv"]
@@ -60,6 +61,8 @@ script = ExtResource("1_mp68m")
 num_astronauts = 20
 player = NodePath("Player")
 player_spawn = NodePath("SpaceStation/PlayerSpawn")
+
+[node name="EndGameTimer" type="Timer" parent="."]
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -264,6 +267,19 @@ theme_override_styles/focus = ExtResource("6_jl3e4")
 text = "Play again"
 script = ExtResource("12_4bssr")
 
+[node name="EndGameProgressBar" type="ProgressBar" parent="UI"]
+visible = false
+custom_minimum_size = Vector2(200, 0)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -2.0
+offset_right = 2.0
+offset_bottom = 27.0
+grow_horizontal = 2
+show_percentage = false
+script = ExtResource("15_qeusc")
+
 [node name="Space" type="Sprite3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, -4.37114e-07, 10, 0, -10, -4.37114e-07, -1.173, -5, -3.923)
 texture = ExtResource("3_gxbaj")
@@ -354,3 +370,4 @@ shape = SubResource("BoxShape3D_8gqvo")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.17219, 0, 27.3096)
 
 [connection signal="area_entered" from="RescuePlatform/RescueArea" to="Player" method="_on_rescue_area_area_entered"]
+[connection signal="area_exited" from="RescuePlatform/RescueArea" to="Player" method="_on_rescue_area_area_exited"]
