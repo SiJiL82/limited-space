@@ -1,10 +1,10 @@
-[gd_scene load_steps=22 format=3 uid="uid://bhp02k7rppku4"]
+[gd_scene load_steps=25 format=3 uid="uid://bhp02k7rppku4"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_mp68m"]
 [ext_resource type="Script" path="res://scripts/FuelBar.gd" id="2_7praw"]
 [ext_resource type="Script" path="res://scripts/GameInfo.gd" id="2_lnu5a"]
-[ext_resource type="Script" path="res://scripts/StartPanel.gd" id="3_g5aw0"]
 [ext_resource type="Script" path="res://scripts/AstronautsPickedUpLabel.gd" id="3_e4cxv"]
+[ext_resource type="Script" path="res://scripts/StartPanel.gd" id="3_g5aw0"]
 [ext_resource type="Texture2D" uid="uid://c73wkwc2iey00" path="res://assets/sprites/space_background.jpg" id="3_gxbaj"]
 [ext_resource type="FontFile" uid="uid://bifu74iphowgq" path="res://assets/fonts/Dashhorizon-eZ5wg.otf" id="3_qi70f"]
 [ext_resource type="FontFile" uid="uid://by8pfvbuu5tgi" path="res://assets/fonts/Cartesian-0W5Oo.otf" id="4_ac5o1"]
@@ -188,7 +188,7 @@ far = 500.0
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 200, 0)
 
-[node name="Player" type="RigidBody3D" parent="." node_paths=PackedStringArray("camera") groups=["Player"]]
+[node name="Player" type="RigidBody3D" parent="." node_paths=PackedStringArray("camera", "play_button") groups=["Player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.6728, 0, 36.6415)
 gravity_scale = 0.0
 script = ExtResource("4_wpgq8")
