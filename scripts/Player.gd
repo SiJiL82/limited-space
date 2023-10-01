@@ -16,6 +16,7 @@ func _ready():
 	fuel = get_node("Fuel")
 	Messenger.STARTPANEL_STARTGAME.connect(func(): game_active = true)
 	Messenger.ASTRONAUT_COLLIDED.connect(pickup_astronaut)
+	Messenger.LOSEPANEL_RESETGAME.connect(func(): linear_velocity = Vector3.ZERO)
 
 func _physics_process(_delta):
 	if game_active:
