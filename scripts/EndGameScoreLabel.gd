@@ -5,7 +5,7 @@ var astronauts: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	astronauts = 0
+	reset_astronauts_count()
 	Messenger.SCORE_VALUECHANGED.connect(update_score)
 	Messenger.WORLD_ENDGAME.connect(update_label_text)
 	Messenger.WORLD_SPAWNEDASTRONAUT.connect(func(): astronauts += 1)
@@ -27,3 +27,7 @@ func update_label_text():
 			Unfortunately " + str(astronauts - score) + " of your colleagues weren't saved. Their bodies will drift endlessly through space."
 	
 	set_text(label_text)
+	reset_astronauts_count()
+
+func reset_astronauts_count():
+	astronauts = 0
