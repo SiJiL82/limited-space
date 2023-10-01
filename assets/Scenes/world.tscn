@@ -1,17 +1,36 @@
-[gd_scene load_steps=17 format=3 uid="uid://bhp02k7rppku4"]
+[gd_scene load_steps=25 format=3 uid="uid://bhp02k7rppku4"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_mp68m"]
 [ext_resource type="Script" path="res://scripts/FuelBar.gd" id="2_7praw"]
+[ext_resource type="Script" path="res://scripts/GameInfo.gd" id="2_lnu5a"]
 [ext_resource type="Script" path="res://scripts/AstronautsPickedUpLabel.gd" id="3_e4cxv"]
+[ext_resource type="Script" path="res://scripts/StartPanel.gd" id="3_g5aw0"]
 [ext_resource type="Texture2D" uid="uid://c73wkwc2iey00" path="res://assets/sprites/space_background.jpg" id="3_gxbaj"]
+[ext_resource type="FontFile" uid="uid://bifu74iphowgq" path="res://assets/fonts/Dashhorizon-eZ5wg.otf" id="3_qi70f"]
+[ext_resource type="FontFile" uid="uid://by8pfvbuu5tgi" path="res://assets/fonts/Cartesian-0W5Oo.otf" id="4_ac5o1"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="4_wpgq8"]
 [ext_resource type="PackedScene" uid="uid://cjo7e2pn2ld76" path="res://assets/meshes/craft_racer.glb" id="5_o38gu"]
+[ext_resource type="Script" path="res://scripts/PlayButton.gd" id="6_50lxo"]
+[ext_resource type="StyleBox" uid="uid://b7w0rwwnu4p5f" path="res://assets/styles/playbutton.tres" id="6_jl3e4"]
 [ext_resource type="Script" path="res://scripts/Engines.gd" id="6_qj61n"]
 [ext_resource type="Script" path="res://scripts/Fuel.gd" id="7_t456d"]
 [ext_resource type="PackedScene" uid="uid://b3htof6nno8ja" path="res://assets/meshes/space_station.glb" id="8_jqhqs"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v2h0u"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gp4yg"]
 bg_color = Color(0.333333, 0.705882, 0, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b02f5"]
+bg_color = Color(0.411765, 0.4, 0.4, 0.960784)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="LabelSettings" id="LabelSettings_bal5q"]
 
@@ -36,24 +55,31 @@ player_spawn = NodePath("SpaceStation/PlayerSpawn")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+[node name="GameInfo" type="PanelContainer" parent="UI" node_paths=PackedStringArray("play_button")]
+visible = false
 offset_right = 40.0
 offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_v2h0u")
+script = ExtResource("2_lnu5a")
+play_button = NodePath("../StartPanel/MarginContainer/VBoxContainer/VBoxContainer/Button")
 
-[node name="FuelLabel" type="Label" parent="UI/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/GameInfo"]
+layout_mode = 2
+
+[node name="FuelLabel" type="Label" parent="UI/GameInfo/HBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.333333, 0.705882, 0, 1)
 text = "Fuel: "
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/GameInfo/HBoxContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/HBoxContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/GameInfo/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="FuelBar" type="ProgressBar" parent="UI/HBoxContainer/VBoxContainer/MarginContainer" node_paths=PackedStringArray("fuel")]
+[node name="FuelBar" type="ProgressBar" parent="UI/GameInfo/HBoxContainer/VBoxContainer/MarginContainer" node_paths=PackedStringArray("fuel")]
 custom_minimum_size = Vector2(200, 20)
 layout_mode = 2
 size_flags_vertical = 3
@@ -61,7 +87,83 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_gp4yg")
 step = 1.0
 show_percentage = false
 script = ExtResource("2_7praw")
-fuel = NodePath("../../../../../Player/Fuel")
+fuel = NodePath("../../../../../../Player/Fuel")
+
+[node name="StartPanel" type="Panel" parent="UI" node_paths=PackedStringArray("play_button")]
+custom_minimum_size = Vector2(800, 600)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_b02f5")
+script = ExtResource("3_g5aw0")
+play_button = NodePath("MarginContainer/VBoxContainer/VBoxContainer/Button")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/StartPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/StartPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="GameTitle" type="Label" parent="UI/StartPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.921569, 1, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_qi70f")
+theme_override_font_sizes/font_size = 64
+text = "Limited Space"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameDescription" type="Label" parent="UI/StartPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "An accident aboard the Ludum Internation Space Station has thrown several workers into space, and they're now stranded!
+
+You have a small maintenance ship you can use to rescue them, but it's not designed for this sort of action, and has limited fuel capacity.
+
+Rotate the ship with the mouse, and press SPACE to fire the thrusters. Each use of the thrusters will consume 1 fuel.
+
+Rescue as many of the workers as you can by bringing them back to the space station - you can only carry a few at a time, so plan your route carefully! And make sure you don't run out of fuel and get stranded too..."
+autowrap_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/StartPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="UI/StartPanel/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_colors/font_color = Color(0, 0.658824, 0.117647, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.403673, 0.0559363, 1)
+theme_override_colors/font_hover_color = Color(0, 0.964706, 0.192157, 1)
+theme_override_fonts/font = ExtResource("4_ac5o1")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = ExtResource("6_jl3e4")
+theme_override_styles/hover = ExtResource("6_jl3e4")
+theme_override_styles/pressed = ExtResource("6_jl3e4")
+theme_override_styles/disabled = ExtResource("6_jl3e4")
+theme_override_styles/focus = ExtResource("6_jl3e4")
+text = "Play"
+script = ExtResource("6_50lxo")
 
 [node name="AstronautsPickedUpContainer" type="HBoxContainer" parent="UI"]
 offset_left = 14.0
@@ -86,11 +188,12 @@ far = 500.0
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 200, 0)
 
-[node name="Player" type="RigidBody3D" parent="." node_paths=PackedStringArray("camera") groups=["Player"]]
+[node name="Player" type="RigidBody3D" parent="." node_paths=PackedStringArray("camera", "play_button") groups=["Player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.6728, 0, 36.6415)
 gravity_scale = 0.0
 script = ExtResource("4_wpgq8")
 camera = NodePath("../Camera3D")
+play_button = NodePath("../UI/StartPanel/MarginContainer/VBoxContainer/VBoxContainer/Button")
 
 [node name="craft_racer" parent="Player" instance=ExtResource("5_o38gu")]
 transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
