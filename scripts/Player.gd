@@ -2,19 +2,23 @@ extends RigidBody3D
 
 @export var camera: Camera3D
 @export var thrust: int = 5
+@export var play_button: Button
 
 var fuel: Node3D
+var game_active: bool = false
 
 signal ThrustApplied()
 
 func _ready():
 	fuel = get_node("Fuel")
+	play_button.StartGame.connect(set_game_active)
 
 func _physics_process(_delta):
-	look_at_mouse()
-	if Input.is_action_just_pressed("thruster"):
-		if fuel.has_fuel():
-			apply_thrust()
+	if game_active:
+		look_at_mouse()
+		if Input.is_action_just_pressed("thruster"):
+			if fuel.has_fuel():
+				apply_thrust()
 
 
 func look_at_mouse():
@@ -32,3 +36,6 @@ func look_at_mouse():
 func apply_thrust():
 	apply_impulse(-global_transform.basis.z * thrust)
 	ThrustApplied.emit()
+
+func set_game_active():
+	game_active = true
