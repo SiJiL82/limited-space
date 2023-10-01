@@ -1,9 +1,12 @@
 extends Node3D
 
-@export var fuel: int = 20
+@export var starting_fuel: int = 20
+var fuel
 
 func _ready():
+	reset_fuel()
 	Messenger.FUEL_MAXFUELSET.emit(fuel)
+	Messenger.LOSEPANEL_RESETGAME.connect(reset_fuel)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -17,3 +20,6 @@ func has_fuel() -> bool:
 	if fuel > 0:
 		return true
 	return false
+
+func reset_fuel():
+	fuel = starting_fuel
