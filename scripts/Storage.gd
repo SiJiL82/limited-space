@@ -7,6 +7,7 @@ var value = 0
 func _ready():
 	value = 0
 	Messenger.PLAYER_PICKEDUPASTRONAUT.connect(increment_value)
+	Messenger.PLAYER_DROPOFFASTRONAUT.connect(empty)
 
 func increment_value():
 	value += 1
@@ -22,3 +23,7 @@ func get_value():
 
 func get_capacity():
 	return capacity
+
+func empty(_empty):
+	value = 0
+	Messenger.STORAGE_VALUECHANGED.emit()

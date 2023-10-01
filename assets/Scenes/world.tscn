@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://bhp02k7rppku4"]
+[gd_scene load_steps=31 format=3 uid="uid://bhp02k7rppku4"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_mp68m"]
 [ext_resource type="Script" path="res://scripts/FuelBar.gd" id="2_7praw"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://b3htof6nno8ja" path="res://assets/meshes/space_station.glb" id="8_jqhqs"]
 [ext_resource type="Script" path="res://scripts/Storage.gd" id="15_cgb2n"]
 [ext_resource type="PackedScene" uid="uid://c17qidxx46kx" path="res://assets/meshes/platform_large.glb" id="17_t5ymh"]
+[ext_resource type="Script" path="res://scripts/RescuePlatform.gd" id="17_ywrmo"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v2h0u"]
 
@@ -67,7 +68,6 @@ player_spawn = NodePath("SpaceStation/PlayerSpawn")
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="GameInfo" type="PanelContainer" parent="UI"]
-visible = false
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 245.0
@@ -253,6 +253,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.00114, 0, -7.90496)
 shape = SubResource("BoxShape3D_cbyfv")
 
 [node name="RescuePlatform" type="StaticBody3D" parent="."]
+script = ExtResource("17_ywrmo")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RescuePlatform"]
 shape = SubResource("BoxShape3D_qrmrw")
@@ -265,3 +266,5 @@ transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, -7.87616, -2.03156, 15.2888)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RescuePlatform/RescueArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.37374, 5.67789, 28.5927)
 shape = SubResource("BoxShape3D_8gqvo")
+
+[connection signal="area_entered" from="RescuePlatform/RescueArea" to="Player" method="_on_rescue_area_area_entered"]
