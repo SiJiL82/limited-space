@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://bhp02k7rppku4"]
+[gd_scene load_steps=45 format=3 uid="uid://bhp02k7rppku4"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_mp68m"]
 [ext_resource type="Script" path="res://scripts/FuelBar.gd" id="2_7praw"]
@@ -10,7 +10,6 @@
 [ext_resource type="FontFile" uid="uid://by8pfvbuu5tgi" path="res://assets/fonts/Cartesian-0W5Oo.otf" id="4_ac5o1"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="4_wpgq8"]
 [ext_resource type="StyleBox" uid="uid://bfjhnulbioouc" path="res://assets/styles/infopanel.tres" id="5_48g4y"]
-[ext_resource type="Script" path="res://scripts/ScoreLabel.gd" id="5_h10br"]
 [ext_resource type="Script" path="res://scripts/Score.gd" id="5_nob05"]
 [ext_resource type="PackedScene" uid="uid://cjo7e2pn2ld76" path="res://assets/meshes/craft_racer.glb" id="5_o38gu"]
 [ext_resource type="Script" path="res://scripts/PlayButton.gd" id="6_50lxo"]
@@ -47,7 +46,7 @@ corner_radius_bottom_left = 3
 [sub_resource type="LabelSettings" id="LabelSettings_bal5q"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_muhga"]
-bg_color = Color(0.0941176, 0, 0.619608, 1)
+bg_color = Color(0.4, 0.52549, 1, 1)
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
@@ -127,14 +126,6 @@ text = "Astronauts in ship:"
 label_settings = SubResource("LabelSettings_bal5q")
 script = ExtResource("3_e4cxv")
 storage = NodePath("../../../../Player/Storage")
-
-[node name="ScoreContainer" type="HBoxContainer" parent="UI/GameInfo"]
-layout_mode = 2
-script = ExtResource("5_nob05")
-
-[node name="Label" type="Label" parent="UI/GameInfo/ScoreContainer"]
-layout_mode = 2
-script = ExtResource("5_h10br")
 
 [node name="StartPanel" type="Panel" parent="UI"]
 custom_minimum_size = Vector2(800, 600)
@@ -373,10 +364,10 @@ layout_mode = 2
 
 [node name="EndGameTimerLabel" type="Label" parent="UI/EndGameTimer/HBoxContainer"]
 layout_mode = 2
-text = "Ending mission:"
+text = "Ending rescue attempt:"
 
 [node name="EndGameProgressBar" type="ProgressBar" parent="UI/EndGameTimer/HBoxContainer"]
-custom_minimum_size = Vector2(200, 40)
+custom_minimum_size = Vector2(200, 20)
 layout_mode = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_muhga")
 show_percentage = false
@@ -494,6 +485,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.17219, 0, 27.3096)
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("22_l1fk6")
 autoplay = true
+
+[node name="Score" type="Node3D" parent="."]
+script = ExtResource("5_nob05")
 
 [connection signal="area_entered" from="RescuePlatform/RescueArea" to="Player" method="_on_rescue_area_area_entered"]
 [connection signal="area_exited" from="RescuePlatform/RescueArea" to="Player" method="_on_rescue_area_area_exited"]
