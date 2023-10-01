@@ -20,7 +20,7 @@ func _physics_process(_delta):
 		if Input.is_action_just_pressed("thruster"):
 			if fuel.has_fuel():
 				apply_thrust()
-
+		check_for_lose_conditions()
 
 func look_at_mouse():
 	var player_pos = global_transform.origin
@@ -46,3 +46,12 @@ func pickup_astronaut(astronaut):
 	if storage.has_space():
 		Messenger.PLAYER_PICKEDUPASTRONAUT.emit()
 		astronaut.queue_free()
+
+func check_for_lose_conditions():
+	if is_close_to_zero(linear_velocity.x) and is_close_to_zero(linear_velocity.z) and !fuel.has_fuel():
+		Messenger.PLAYER_LOSTGAME.emit()
+
+func is_close_to_zero(value) -> bool:
+	if value > -0.1 and value < 0.1:
+		return true
+	return false
