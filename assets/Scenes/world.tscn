@@ -25,14 +25,14 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
+[sub_resource type="LabelSettings" id="LabelSettings_bal5q"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b02f5"]
 bg_color = Color(0.411765, 0.4, 0.4, 0.960784)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
-
-[sub_resource type="LabelSettings" id="LabelSettings_bal5q"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nx7s0"]
 
@@ -57,14 +57,17 @@ player_spawn = NodePath("SpaceStation/PlayerSpawn")
 
 [node name="GameInfo" type="PanelContainer" parent="UI" node_paths=PackedStringArray("play_button")]
 visible = false
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 245.0
+grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_v2h0u")
 script = ExtResource("2_lnu5a")
 play_button = NodePath("../StartPanel/MarginContainer/VBoxContainer/VBoxContainer/Button")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/GameInfo"]
 layout_mode = 2
+size_flags_vertical = 0
 
 [node name="FuelLabel" type="Label" parent="UI/GameInfo/HBoxContainer"]
 layout_mode = 2
@@ -88,6 +91,16 @@ step = 1.0
 show_percentage = false
 script = ExtResource("2_7praw")
 fuel = NodePath("../../../../../../Player/Fuel")
+
+[node name="AstronautsPickedUpContainer" type="HBoxContainer" parent="UI/GameInfo"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="AstronautsPickedUpLabel" type="Label" parent="UI/GameInfo/AstronautsPickedUpContainer"]
+layout_mode = 2
+text = "Astronauts in ship:"
+label_settings = SubResource("LabelSettings_bal5q")
+script = ExtResource("3_e4cxv")
 
 [node name="StartPanel" type="Panel" parent="UI" node_paths=PackedStringArray("play_button")]
 custom_minimum_size = Vector2(800, 600)
@@ -164,18 +177,6 @@ theme_override_styles/disabled = ExtResource("6_jl3e4")
 theme_override_styles/focus = ExtResource("6_jl3e4")
 text = "Play"
 script = ExtResource("6_50lxo")
-
-[node name="AstronautsPickedUpContainer" type="HBoxContainer" parent="UI"]
-offset_left = 14.0
-offset_top = 957.0
-offset_right = 413.0
-offset_bottom = 1067.0
-
-[node name="AstronautsPickedUpLabel" type="Label" parent="UI/AstronautsPickedUpContainer"]
-layout_mode = 2
-text = "Astronauts in ship:"
-label_settings = SubResource("LabelSettings_bal5q")
-script = ExtResource("3_e4cxv")
 
 [node name="Space" type="Sprite3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, -4.37114e-07, 10, 0, -10, -4.37114e-07, -1.173, -5, -3.923)
