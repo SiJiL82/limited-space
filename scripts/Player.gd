@@ -2,7 +2,7 @@ extends RigidBody3D
 
 @export var camera: Camera3D
 @export var thrust: int = 5
-@export var ship_capacity: int = 3
+@export_range(0, 1) var rotate_speed: float = 0
 
 @onready var storage = $Storage
 
@@ -14,15 +14,15 @@ func _ready():
 	Messenger.STARTPANEL_STARTGAME.connect(func(): game_active = true)
 	Messenger.ASTRONAUT_COLLIDED.connect(pickup_astronaut)
 
-func _physics_process(_delta):
+func _physics_process(delta):
 	if game_active:
-		look_at_mouse()
+		look_at_mouse(delta)
 		if Input.is_action_just_pressed("thruster"):
 			if fuel.has_fuel():
 				apply_thrust()
 
 
-func look_at_mouse():
+func look_at_mouse(_delta):
 	var player_pos = global_transform.origin
 	var drop_plane = Plane(Vector3(0, 1, 0), player_pos.y)
 
@@ -32,7 +32,11 @@ func look_at_mouse():
 	var to = from + camera.project_ray_normal(mouse_pos) * ray_length
 	var cursor_pos = drop_plane.intersects_ray(from, to)
 
-	look_at(cursor_pos, Vector3.UP)
+	# Interpolate the rotation towards the mouse pointer
+	transform = transform.interpolate_with(
+		transform.looking_at(cursor_pos, Vector3.UP),
+		rotate_speed
+	)
 
 func apply_thrust():
 	apply_impulse(-global_transform.basis.z * thrust)
