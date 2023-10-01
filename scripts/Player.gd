@@ -3,9 +3,13 @@ extends RigidBody3D
 @export var camera: Camera3D
 @export var thrust: int = 5
 
-var fuel: Node3D
+var global = preload("res://scripts/Global.gd").new()
+@onready var astronauts_picked_up_label = get_node("/root/World/UI/AstronautsPickedUpContainer/AstronautsPickedUpLabel")
 
+var fuel: Node3D
 signal ThrustApplied()
+
+var has_space = true
 
 func _ready():
 	fuel = get_node("Fuel")
@@ -32,3 +36,10 @@ func look_at_mouse():
 func apply_thrust():
 	apply_impulse(-global_transform.basis.z * thrust)
 	ThrustApplied.emit()
+
+func pickup_astronaut():
+	if has_space:
+		global.increment_astronaut_pick_up_count()
+		if global.astronauts_picked_up >= 3:
+			has_space = false
+		astronauts_picked_up_label.update_label(global.get_astronaut_pick_up_count())
