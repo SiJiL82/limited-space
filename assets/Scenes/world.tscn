@@ -9,6 +9,7 @@
 [ext_resource type="FontFile" uid="uid://bifu74iphowgq" path="res://assets/fonts/Dashhorizon-eZ5wg.otf" id="3_qi70f"]
 [ext_resource type="FontFile" uid="uid://by8pfvbuu5tgi" path="res://assets/fonts/Cartesian-0W5Oo.otf" id="4_ac5o1"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="4_wpgq8"]
+[ext_resource type="StyleBox" uid="uid://bfjhnulbioouc" path="res://assets/styles/infopanel.tres" id="5_48g4y"]
 [ext_resource type="Script" path="res://scripts/ScoreLabel.gd" id="5_h10br"]
 [ext_resource type="Script" path="res://scripts/Score.gd" id="5_nob05"]
 [ext_resource type="PackedScene" uid="uid://cjo7e2pn2ld76" path="res://assets/meshes/craft_racer.glb" id="5_o38gu"]
@@ -17,11 +18,14 @@
 [ext_resource type="Script" path="res://scripts/Engines.gd" id="6_qj61n"]
 [ext_resource type="Script" path="res://scripts/Fuel.gd" id="7_t456d"]
 [ext_resource type="PackedScene" uid="uid://b3htof6nno8ja" path="res://assets/meshes/space_station.glb" id="8_jqhqs"]
+[ext_resource type="Script" path="res://scripts/LosePanel.gd" id="11_ily60"]
+[ext_resource type="Script" path="res://scripts/PlayAgainButton.gd" id="12_4bssr"]
 [ext_resource type="Script" path="res://scripts/Storage.gd" id="15_cgb2n"]
 [ext_resource type="PackedScene" uid="uid://c17qidxx46kx" path="res://assets/meshes/platform_large.glb" id="17_t5ymh"]
 [ext_resource type="Script" path="res://scripts/RescuePlatform.gd" id="17_ywrmo"]
 [ext_resource type="AudioStream" uid="uid://ygrjipgt4ik1" path="res://assets/audio/sfx/203264__metrostock99__rocket-booster-raw-editable.ogg" id="18_h70dx"]
 [ext_resource type="AudioStream" uid="uid://dldyuvim8jrbn" path="res://assets/audio/sfx/396649__matrixxx__space-atmosphere-02.ogg" id="22_l1fk6"]
+[ext_resource type="Material" uid="uid://chgfg27gqh1l4" path="res://assets/styles/engines.tres" id="19_5lsfv"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v2h0u"]
 
@@ -34,19 +38,9 @@ corner_radius_bottom_left = 3
 
 [sub_resource type="LabelSettings" id="LabelSettings_bal5q"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b02f5"]
-bg_color = Color(0.411765, 0.4, 0.4, 0.960784)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_nx7s0"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_al74g"]
-
-[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_wl3o5"]
-albedo_color = Color(1, 0.337255, 0.0980392, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rm0l6"]
 size = Vector3(16.2607, 8.44483, 13.8334)
@@ -137,7 +131,7 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_b02f5")
+theme_override_styles/panel = ExtResource("5_48g4y")
 script = ExtResource("3_g5aw0")
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/StartPanel"]
@@ -182,12 +176,12 @@ autowrap_mode = 3
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Button" type="Button" parent="UI/StartPanel/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="PlayButton" type="Button" parent="UI/StartPanel/MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 theme_override_colors/font_color = Color(0, 0.658824, 0.117647, 1)
-theme_override_colors/font_pressed_color = Color(0, 0.403673, 0.0559363, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.403922, 0.054902, 1)
 theme_override_colors/font_hover_color = Color(0, 0.964706, 0.192157, 1)
 theme_override_fonts/font = ExtResource("4_ac5o1")
 theme_override_font_sizes/font_size = 64
@@ -200,6 +194,78 @@ text = "Play"
 script = ExtResource("6_50lxo")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="UI/StartPanel"]
+[node name="LosePanel" type="Panel" parent="UI"]
+visible = false
+custom_minimum_size = Vector2(800, 600)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("5_48g4y")
+script = ExtResource("11_ily60")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/LosePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/LosePanel/MarginContainer"]
+layout_mode = 2
+
+[node name="GameOverLabel" type="Label" parent="UI/LosePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.945098, 1, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_qi70f")
+theme_override_font_sizes/font_size = 64
+text = "Game Over"
+horizontal_alignment = 1
+
+[node name="GameOverDescription" type="Label" parent="UI/LosePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 18
+text = "You ran out of fuel, and are stranded just like the workers you were trying to rescue.
+
+You hold onto the hope that someone will be able to come and rescue you before your oxygen runs out.
+
+Your colleagues won't be so lucky."
+autowrap_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/LosePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PlayAgainButton" type="Button" parent="UI/LosePanel/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_colors/font_color = Color(0, 0.658824, 0.117647, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.403922, 0.054902, 1)
+theme_override_colors/font_hover_color = Color(0, 0.964706, 0.192157, 1)
+theme_override_fonts/font = ExtResource("4_ac5o1")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = ExtResource("6_jl3e4")
+theme_override_styles/hover = ExtResource("6_jl3e4")
+theme_override_styles/pressed = ExtResource("6_jl3e4")
+theme_override_styles/disabled = ExtResource("6_jl3e4")
+theme_override_styles/focus = ExtResource("6_jl3e4")
+text = "Play again"
+script = ExtResource("12_4bssr")
 
 [node name="Space" type="Sprite3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, -4.37114e-07, 10, 0, -10, -4.37114e-07, -1.173, -5, -3.923)
@@ -212,12 +278,17 @@ far = 500.0
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 200, 0)
 
-[node name="Player" type="RigidBody3D" parent="." node_paths=PackedStringArray("camera") groups=["Player"]]
+[node name="Player" type="RigidBody3D" parent="." node_paths=PackedStringArray("camera", "rescue_point") groups=["Player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.6728, 0, 36.6415)
+axis_lock_linear_y = true
+axis_lock_angular_x = true
+axis_lock_angular_z = true
 gravity_scale = 0.0
+freeze_mode = 1
 script = ExtResource("4_wpgq8")
 camera = NodePath("../Camera3D")
 rotate_speed = 0.08
+rescue_point = NodePath("../RescuePlatform/RescueArea/RescuePoint")
 
 [node name="craft_racer" parent="Player" instance=ExtResource("5_o38gu")]
 transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
@@ -232,12 +303,12 @@ script = ExtResource("6_qj61n")
 transform = Transform3D(0.2, 0, 0, 0, -4.79951e-08, -0.2, 0, 1.098, -8.74228e-09, -0.325827, 0.227381, 1.43856)
 mesh = SubResource("PrismMesh_al74g")
 skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("ORMMaterial3D_wl3o5")
+surface_material_override/0 = ExtResource("19_5lsfv")
 
 [node name="RightEngine" type="MeshInstance3D" parent="Player/craft_racer/Engines"]
 transform = Transform3D(0.2, 0, 0, 0, -4.37114e-08, -0.2, 0, 1, -8.74228e-09, 0.32, 0.22, 1.44)
 mesh = SubResource("PrismMesh_al74g")
-surface_material_override/0 = SubResource("ORMMaterial3D_wl3o5")
+surface_material_override/0 = ExtResource("19_5lsfv")
 
 [node name="EngineShowTimer" type="Timer" parent="Player/craft_racer/Engines"]
 wait_time = 0.5
@@ -291,5 +362,7 @@ shape = SubResource("BoxShape3D_8gqvo")
 stream = ExtResource("22_l1fk6")
 autoplay = true
 bus = &"Atmosphere"
+[node name="RescuePoint" type="Node3D" parent="RescuePlatform/RescueArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.17219, 0, 27.3096)
 
 [connection signal="area_entered" from="RescuePlatform/RescueArea" to="Player" method="_on_rescue_area_area_entered"]
