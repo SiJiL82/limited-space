@@ -1,8 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://bhp02k7rppku4"]
+[gd_scene load_steps=18 format=3 uid="uid://bhp02k7rppku4"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_mp68m"]
 [ext_resource type="Script" path="res://scripts/FuelBar.gd" id="2_7praw"]
 [ext_resource type="Texture2D" uid="uid://c73wkwc2iey00" path="res://assets/sprites/space_background.jpg" id="3_gxbaj"]
+[ext_resource type="FontFile" uid="uid://bifu74iphowgq" path="res://assets/fonts/Dashhorizon-eZ5wg.otf" id="3_qi70f"]
+[ext_resource type="FontFile" uid="uid://by8pfvbuu5tgi" path="res://assets/fonts/Cartesian-0W5Oo.otf" id="4_ac5o1"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="4_wpgq8"]
 [ext_resource type="PackedScene" uid="uid://cjo7e2pn2ld76" path="res://assets/meshes/craft_racer.glb" id="5_o38gu"]
 [ext_resource type="Script" path="res://scripts/Engines.gd" id="6_qj61n"]
@@ -17,6 +19,13 @@ corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b02f5"]
+bg_color = Color(0.411765, 0.4, 0.4, 0.745098)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nx7s0"]
 
@@ -66,6 +75,60 @@ step = 1.0
 show_percentage = false
 script = ExtResource("2_7praw")
 fuel = NodePath("../../../../../../Player/Fuel")
+
+[node name="StartPanel" type="Panel" parent="UI"]
+custom_minimum_size = Vector2(800, 600)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_b02f5")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/StartPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/StartPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="GameTitle" type="Label" parent="UI/StartPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.921569, 1, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_qi70f")
+theme_override_font_sizes/font_size = 64
+text = "Limited Space"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameDescription" type="Label" parent="UI/StartPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ac5o1")
+theme_override_font_sizes/font_size = 22
+text = "An accident aboard the Ludum Internation Space Station has thrown several workers into space, and they're now stranded!
+
+You have a small maintenance ship you can use to rescue them, but it's not designed for this sort of action, and has limited fuel capacity.
+
+Rotate the ship with the mouse, and press SPACE to fire the thrusters. Each use of the the thrusters will consume 1 fuel.
+
+Rescue as many of the workers as you can by bringing them back to the space station - you can only carry a few at a time, so plan your route carefully! And make sure you don't run out of fuel and get stranded too..."
+autowrap_mode = 3
 
 [node name="Space" type="Sprite3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, -4.37114e-07, 10, 0, -10, -4.37114e-07, -1.173, -5, -3.923)
