@@ -5,7 +5,7 @@ extends Label
 var text_prefix: String = "Astronauts in ship: "
 
 func _ready():
-	Messenger.PLAYER_PICKEDUPASTRONAUT.connect(update_label)
+	Messenger.STORAGE_VALUECHANGED.connect(update_label)
 	update_label()
 
 func update_label():

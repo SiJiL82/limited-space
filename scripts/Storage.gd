@@ -5,7 +5,12 @@ class_name Storage
 var value = 0
 
 func _ready():
-	Messenger.PLAYER_PICKEDUPASTRONAUT.connect(func(): value += 1)
+	value = 0
+	Messenger.PLAYER_PICKEDUPASTRONAUT.connect(increment_value)
+
+func increment_value():
+	value += 1
+	Messenger.STORAGE_VALUECHANGED.emit()
 
 func has_space() -> bool:
 	if value < capacity:

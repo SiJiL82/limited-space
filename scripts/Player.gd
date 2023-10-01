@@ -12,6 +12,7 @@ var game_active: bool = false
 func _ready():
 	fuel = get_node("Fuel")
 	Messenger.STARTPANEL_STARTGAME.connect(func(): game_active = true)
+	Messenger.ASTRONAUT_COLLIDED.connect(pickup_astronaut)
 
 func _physics_process(_delta):
 	if game_active:
@@ -37,8 +38,7 @@ func apply_thrust():
 	apply_impulse(-global_transform.basis.z * thrust)
 	Messenger.PLAYER_THRUSTAPPLIED.emit()
 
-func pickup_astronaut() -> bool:
+func pickup_astronaut(astronaut):
 	if storage.has_space():
 		Messenger.PLAYER_PICKEDUPASTRONAUT.emit()
-		return true
-	return false
+		astronaut.queue_free()

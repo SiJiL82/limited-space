@@ -45,12 +45,12 @@ albedo_color = Color(1, 0.337255, 0.0980392, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_rm0l6"]
 size = Vector3(16.2607, 8.44483, 13.8334)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_tssb0"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_vgs4s"]
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("player", "player_spawn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.57782, 0, 0.176666)
 script = ExtResource("1_mp68m")
-num_astronauts = 10
+num_astronauts = 20
 player = NodePath("Player")
 player_spawn = NodePath("SpaceStation/PlayerSpawn")
 
@@ -233,7 +233,7 @@ script = ExtResource("15_cgb2n")
 
 [node name="space_station" parent="SpaceStation" instance=ExtResource("8_jqhqs")]
 transform = Transform3D(12, 0, 0, 0, 12, 0, 0, 0, 12, 8.34704, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_tssb0")
+shape = SubResource("BoxShape3D_vgs4s")
 
 [node name="PlayerSpawn" type="Node3D" parent="SpaceStation"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.18587, 0, 30.1377)

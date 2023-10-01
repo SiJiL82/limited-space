@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dhceg8hiqpuwa"]
+[gd_scene load_steps=7 format=3 uid="uid://dhceg8hiqpuwa"]
 
 [ext_resource type="PackedScene" uid="uid://chyr1drd8ox03" path="res://assets/meshes/astronautA.glb" id="1_71chj"]
 [ext_resource type="Script" path="res://scripts/Astronaut.gd" id="1_o81us"]
@@ -137,6 +137,9 @@ _data = {
 "spinning": SubResource("Animation_c64mq")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_2gvc1"]
+size = Vector3(0.304473, 0.840601, 0.280216)
+
 [node name="astronautFloating" type="Node3D"]
 transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
 script = ExtResource("1_o81us")
@@ -154,5 +157,12 @@ transform = Transform3D(1, 0, 0, 0, -1, -2.53518e-06, 0, 2.53518e-06, -1, 0.13, 
 libraries = {
 "": SubResource("AnimationLibrary_7cn42")
 }
+
+[node name="Area3D" type="Area3D" parent="astronautA"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="astronautA/Area3D"]
+shape = SubResource("BoxShape3D_2gvc1")
+
+[connection signal="body_entered" from="astronautA/Area3D" to="." method="_on_area_3d_body_entered"]
 
 [editable path="astronautA"]
