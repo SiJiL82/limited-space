@@ -26,6 +26,7 @@ func has_fuel() -> bool:
 
 func reset_fuel():
 	fuel = max_fuel
+	Messenger.FUEL_FUELCHANGED.emit(fuel)
 
 func add_fuel(astronauts_in_storage):
 	var fuel_to_add = refuel_values[astronauts_in_storage]
