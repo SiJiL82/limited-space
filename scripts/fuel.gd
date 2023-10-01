@@ -1,12 +1,15 @@
 extends Node3D
 
-@export var starting_fuel: int = 20
+@export var max_fuel: int = 20
 var fuel
+var refuel_values = [0, 10, 15, 20]
 
 func _ready():
 	reset_fuel()
 	Messenger.FUEL_MAXFUELSET.emit(fuel)
 	Messenger.LOSEPANEL_RESETGAME.connect(reset_fuel)
+	Messenger.PLAYER_DROPOFFASTRONAUT.connect(add_fuel)
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -22,4 +25,15 @@ func has_fuel() -> bool:
 	return false
 
 func reset_fuel():
-	fuel = starting_fuel
+	fuel = max_fuel
+
+func add_fuel(astronauts_in_storage):
+	var fuel_to_add = refuel_values[astronauts_in_storage]
+
+	#Ensures fuel doesn't go over max.
+	if(fuel_to_add + fuel >= max_fuel):
+		fuel = max_fuel
+	else:
+		fuel += fuel_to_add
+	
+	Messenger.FUEL_FUELCHANGED.emit(fuel)
