@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dhceg8hiqpuwa"]
+[gd_scene load_steps=7 format=3 uid="uid://dhceg8hiqpuwa"]
 
 [ext_resource type="PackedScene" uid="uid://chyr1drd8ox03" path="res://assets/meshes/astronautA.glb" id="1_71chj"]
 [ext_resource type="Script" path="res://scripts/Astronaut.gd" id="1_o81us"]
@@ -137,11 +137,14 @@ _data = {
 "spinning": SubResource("Animation_c64mq")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_dfxdq"]
+size = Vector3(0.266032, 0.764602, 0.253885)
+
 [node name="astronautFloating" type="Node3D"]
 transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
 script = ExtResource("1_o81us")
 
-[node name="astronautA" parent="." instance=ExtResource("1_71chj")]
+[node name="astronautA" parent="." groups=["Astronauts"] instance=ExtResource("1_71chj")]
 transform = Transform3D(1, 8.88177e-16, 2.98023e-08, 0, 1, -2.98023e-08, -2.98023e-08, 2.98023e-08, 1, 0, 0, 0)
 
 [node name="armLeft" parent="astronautA/tmpParent/astronautA2" index="0"]
@@ -150,9 +153,21 @@ transform = Transform3D(0.8584, 0, 0, 0, -0.8584, -2.1762e-06, 0, 2.1762e-06, -0
 [node name="armRight" parent="astronautA/tmpParent/astronautA2" index="1"]
 transform = Transform3D(1, 0, 0, 0, -1, -2.53518e-06, 0, 2.53518e-06, -1, 0.13, 0.473184, 0)
 
+[node name="legLeft" parent="astronautA/tmpParent/astronautA2" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13, 0.223184, -4.44089e-16)
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="astronautA"]
 libraries = {
 "": SubResource("AnimationLibrary_7cn42")
 }
+
+[node name="Area3D" type="Area3D" parent="astronautA"]
+transform = Transform3D(1, 0, -2.98023e-08, 8.88177e-16, 1, 2.98023e-08, 2.98023e-08, -2.98023e-08, 1, 0, 0, 0)
+script = ExtResource("1_o81us")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="astronautA/Area3D"]
+shape = SubResource("BoxShape3D_dfxdq")
+
+[connection signal="body_entered" from="astronautA/Area3D" to="astronautA/Area3D" method="_board_player_ship"]
 
 [editable path="astronautA"]
