@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://scripts/FuelBar.gd" id="2_7praw"]
 [ext_resource type="Script" path="res://scripts/GameInfo.gd" id="2_lnu5a"]
 [ext_resource type="Script" path="res://scripts/StartPanel.gd" id="3_g5aw0"]
+[ext_resource type="Script" path="res://scripts/AstronautsPickedUpLabel.gd" id="3_e4cxv"]
 [ext_resource type="Texture2D" uid="uid://c73wkwc2iey00" path="res://assets/sprites/space_background.jpg" id="3_gxbaj"]
 [ext_resource type="FontFile" uid="uid://bifu74iphowgq" path="res://assets/fonts/Dashhorizon-eZ5wg.otf" id="3_qi70f"]
 [ext_resource type="FontFile" uid="uid://by8pfvbuu5tgi" path="res://assets/fonts/Cartesian-0W5Oo.otf" id="4_ac5o1"]
@@ -31,12 +32,17 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="LabelSettings" id="LabelSettings_bal5q"]
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_nx7s0"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_al74g"]
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_wl3o5"]
 albedo_color = Color(1, 0.337255, 0.0980392, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rm0l6"]
+size = Vector3(16.2607, 8.44483, 13.8334)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_tssb0"]
 
@@ -159,6 +165,18 @@ theme_override_styles/focus = ExtResource("6_jl3e4")
 text = "Play"
 script = ExtResource("6_50lxo")
 
+[node name="AstronautsPickedUpContainer" type="HBoxContainer" parent="UI"]
+offset_left = 14.0
+offset_top = 957.0
+offset_right = 413.0
+offset_bottom = 1067.0
+
+[node name="AstronautsPickedUpLabel" type="Label" parent="UI/AstronautsPickedUpContainer"]
+layout_mode = 2
+text = "Astronauts in ship:"
+label_settings = SubResource("LabelSettings_bal5q")
+script = ExtResource("3_e4cxv")
+
 [node name="Space" type="Sprite3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, -4.37114e-07, 10, 0, -10, -4.37114e-07, -1.173, -5, -3.923)
 texture = ExtResource("3_gxbaj")
@@ -170,7 +188,7 @@ far = 500.0
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 200, 0)
 
-[node name="Player" type="RigidBody3D" parent="." node_paths=PackedStringArray("camera", "play_button")]
+[node name="Player" type="RigidBody3D" parent="." node_paths=PackedStringArray("camera") groups=["Player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.6728, 0, 36.6415)
 gravity_scale = 0.0
 script = ExtResource("4_wpgq8")
@@ -204,6 +222,12 @@ wait_time = 0.5
 
 [node name="Fuel" type="Node3D" parent="Player"]
 script = ExtResource("7_t456d")
+
+[node name="Area3D" type="Area3D" parent="Player"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/Area3D"]
+transform = Transform3D(0.00340842, 0.999564, -0.0293446, 0.999619, -0.00260127, 0.0275025, 0.027414, -0.0294271, -0.999191, -0.305779, -4.71158, 0.785301)
+shape = SubResource("BoxShape3D_rm0l6")
 
 [node name="SpaceStation" type="StaticBody3D" parent="."]
 
