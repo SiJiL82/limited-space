@@ -14,15 +14,15 @@ func _ready():
 	Messenger.STARTPANEL_STARTGAME.connect(func(): game_active = true)
 	Messenger.ASTRONAUT_COLLIDED.connect(pickup_astronaut)
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if game_active:
-		look_at_mouse(delta)
+		look_at_mouse()
 		if Input.is_action_just_pressed("thruster"):
 			if fuel.has_fuel():
 				apply_thrust()
 
 
-func look_at_mouse(_delta):
+func look_at_mouse():
 	var player_pos = global_transform.origin
 	var drop_plane = Plane(Vector3(0, 1, 0), player_pos.y)
 
