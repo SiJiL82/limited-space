@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bhp02k7rppku4"]
+[gd_scene load_steps=30 format=3 uid="uid://bhp02k7rppku4"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_mp68m"]
 [ext_resource type="Script" path="res://scripts/FuelBar.gd" id="2_7praw"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://scripts/Fuel.gd" id="7_t456d"]
 [ext_resource type="PackedScene" uid="uid://b3htof6nno8ja" path="res://assets/meshes/space_station.glb" id="8_jqhqs"]
 [ext_resource type="Script" path="res://scripts/Storage.gd" id="15_cgb2n"]
+[ext_resource type="PackedScene" uid="uid://c17qidxx46kx" path="res://assets/meshes/platform_large.glb" id="17_t5ymh"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v2h0u"]
 
@@ -46,6 +47,15 @@ albedo_color = Color(1, 0.337255, 0.0980392, 1)
 size = Vector3(16.2607, 8.44483, 13.8334)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vgs4s"]
+size = Vector3(2.14738, 1.09396, 2.45152)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cbyfv"]
+size = Vector3(43.6322, 25.613, 43.4014)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qrmrw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8gqvo"]
+size = Vector3(15.8054, 19.7452, 13.6546)
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("player", "player_spawn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.57782, 0, 0.176666)
@@ -237,3 +247,21 @@ shape = SubResource("BoxShape3D_vgs4s")
 
 [node name="PlayerSpawn" type="Node3D" parent="SpaceStation"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.18587, 0, 30.1377)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SpaceStation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.00114, 0, -7.90496)
+shape = SubResource("BoxShape3D_cbyfv")
+
+[node name="RescuePlatform" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RescuePlatform"]
+shape = SubResource("BoxShape3D_qrmrw")
+
+[node name="platform_large" parent="RescuePlatform" instance=ExtResource("17_t5ymh")]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, -7.87616, -2.03156, 15.2888)
+
+[node name="RescueArea" type="Area3D" parent="RescuePlatform"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RescuePlatform/RescueArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.37374, 5.67789, 28.5927)
+shape = SubResource("BoxShape3D_8gqvo")
