@@ -1,12 +1,7 @@
 extends ProgressBar
 
-@export var fuel: Node3D
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	fuel.FuelChanged.connect(update_fuel_display)
-	max_value = fuel.fuel
+	Messenger.FUEL_FUELCHANGED.connect(func(_value): value = _value)
+	Messenger.FUEL_MAXFUELSET.connect(func(_value): max_value = _value)
 	value = max_value
-
-func update_fuel_display(_value):
-	value = _value

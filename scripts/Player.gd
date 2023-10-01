@@ -2,20 +2,17 @@ extends RigidBody3D
 
 @export var camera: Camera3D
 @export var thrust: int = 5
-@export var play_button: Button
+@export var ship_capacity: int = 3
 
-var global = preload("res://scripts/Global.gd").new()
-@onready var astronauts_picked_up_label = get_node("/root/World/UI/AstronautsPickedUpContainer/AstronautsPickedUpLabel")
+@onready var storage = $Storage
 
 var fuel: Node3D
 var game_active: bool = false
-signal ThrustApplied()
-
-var has_space = true
 
 func _ready():
 	fuel = get_node("Fuel")
-	play_button.StartGame.connect(set_game_active)
+	Messenger.STARTPANEL_STARTGAME.connect(func(): game_active = true)
+	Messenger.ASTRONAUT_COLLIDED.connect(pickup_astronaut)
 
 func _physics_process(_delta):
 	if game_active:
@@ -39,14 +36,9 @@ func look_at_mouse():
 
 func apply_thrust():
 	apply_impulse(-global_transform.basis.z * thrust)
-	ThrustApplied.emit()
+	Messenger.PLAYER_THRUSTAPPLIED.emit()
 
-func set_game_active():
-	game_active = true
-
-func pickup_astronaut():
-	if has_space:
-		global.increment_astronaut_pick_up_count()
-		if global.astronauts_picked_up >= 3:
-			has_space = false
-		astronauts_picked_up_label.update_label(global.get_astronaut_pick_up_count())
+func pickup_astronaut(astronaut):
+	if storage.has_space():
+		Messenger.PLAYER_PICKEDUPASTRONAUT.emit()
+		astronaut.queue_free()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bhp02k7rppku4"]
+[gd_scene load_steps=26 format=3 uid="uid://bhp02k7rppku4"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_mp68m"]
 [ext_resource type="Script" path="res://scripts/FuelBar.gd" id="2_7praw"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://scripts/Engines.gd" id="6_qj61n"]
 [ext_resource type="Script" path="res://scripts/Fuel.gd" id="7_t456d"]
 [ext_resource type="PackedScene" uid="uid://b3htof6nno8ja" path="res://assets/meshes/space_station.glb" id="8_jqhqs"]
+[ext_resource type="Script" path="res://scripts/Storage.gd" id="15_cgb2n"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v2h0u"]
 
@@ -44,18 +45,18 @@ albedo_color = Color(1, 0.337255, 0.0980392, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_rm0l6"]
 size = Vector3(16.2607, 8.44483, 13.8334)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_tssb0"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_vgs4s"]
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("player", "player_spawn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.57782, 0, 0.176666)
 script = ExtResource("1_mp68m")
-num_astronauts = 10
+num_astronauts = 20
 player = NodePath("Player")
 player_spawn = NodePath("SpaceStation/PlayerSpawn")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="GameInfo" type="PanelContainer" parent="UI" node_paths=PackedStringArray("play_button")]
+[node name="GameInfo" type="PanelContainer" parent="UI"]
 visible = false
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -63,7 +64,6 @@ offset_right = 245.0
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_v2h0u")
 script = ExtResource("2_lnu5a")
-play_button = NodePath("../StartPanel/MarginContainer/VBoxContainer/VBoxContainer/Button")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/GameInfo"]
 layout_mode = 2
@@ -82,7 +82,7 @@ layout_mode = 2
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="FuelBar" type="ProgressBar" parent="UI/GameInfo/HBoxContainer/VBoxContainer/MarginContainer" node_paths=PackedStringArray("fuel")]
+[node name="FuelBar" type="ProgressBar" parent="UI/GameInfo/HBoxContainer/VBoxContainer/MarginContainer"]
 custom_minimum_size = Vector2(200, 20)
 layout_mode = 2
 size_flags_vertical = 3
@@ -90,19 +90,19 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_gp4yg")
 step = 1.0
 show_percentage = false
 script = ExtResource("2_7praw")
-fuel = NodePath("../../../../../../Player/Fuel")
 
 [node name="AstronautsPickedUpContainer" type="HBoxContainer" parent="UI/GameInfo"]
 layout_mode = 2
 size_flags_vertical = 8
 
-[node name="AstronautsPickedUpLabel" type="Label" parent="UI/GameInfo/AstronautsPickedUpContainer"]
+[node name="AstronautsPickedUpLabel" type="Label" parent="UI/GameInfo/AstronautsPickedUpContainer" node_paths=PackedStringArray("storage")]
 layout_mode = 2
 text = "Astronauts in ship:"
 label_settings = SubResource("LabelSettings_bal5q")
 script = ExtResource("3_e4cxv")
+storage = NodePath("../../../../Player/Storage")
 
-[node name="StartPanel" type="Panel" parent="UI" node_paths=PackedStringArray("play_button")]
+[node name="StartPanel" type="Panel" parent="UI"]
 custom_minimum_size = Vector2(800, 600)
 anchors_preset = 8
 anchor_left = 0.5
@@ -117,7 +117,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_b02f5")
 script = ExtResource("3_g5aw0")
-play_button = NodePath("MarginContainer/VBoxContainer/VBoxContainer/Button")
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/StartPanel"]
 layout_mode = 1
@@ -189,23 +188,20 @@ far = 500.0
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 200, 0)
 
-[node name="Player" type="RigidBody3D" parent="." node_paths=PackedStringArray("camera", "play_button") groups=["Player"]]
+[node name="Player" type="RigidBody3D" parent="." node_paths=PackedStringArray("camera") groups=["Player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.6728, 0, 36.6415)
 gravity_scale = 0.0
 script = ExtResource("4_wpgq8")
 camera = NodePath("../Camera3D")
-play_button = NodePath("../UI/StartPanel/MarginContainer/VBoxContainer/VBoxContainer/Button")
 
 [node name="craft_racer" parent="Player" instance=ExtResource("5_o38gu")]
 transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
 shape = SubResource("BoxShape3D_nx7s0")
 
-[node name="Engines" type="Node3D" parent="Player/craft_racer" node_paths=PackedStringArray("timer", "player")]
+[node name="Engines" type="Node3D" parent="Player/craft_racer"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0579112, 0)
 visible = false
 script = ExtResource("6_qj61n")
-timer = NodePath("Timer")
-player = NodePath("../..")
 
 [node name="LeftEngine" type="MeshInstance3D" parent="Player/craft_racer/Engines"]
 transform = Transform3D(0.2, 0, 0, 0, -4.79951e-08, -0.2, 0, 1.098, -8.74228e-09, -0.325827, 0.227381, 1.43856)
@@ -218,7 +214,7 @@ transform = Transform3D(0.2, 0, 0, 0, -4.37114e-08, -0.2, 0, 1, -8.74228e-09, 0.
 mesh = SubResource("PrismMesh_al74g")
 surface_material_override/0 = SubResource("ORMMaterial3D_wl3o5")
 
-[node name="Timer" type="Timer" parent="Player/craft_racer/Engines"]
+[node name="EngineShowTimer" type="Timer" parent="Player/craft_racer/Engines"]
 wait_time = 0.5
 
 [node name="Fuel" type="Node3D" parent="Player"]
@@ -230,11 +226,14 @@ script = ExtResource("7_t456d")
 transform = Transform3D(0.00340842, 0.999564, -0.0293446, 0.999619, -0.00260127, 0.0275025, 0.027414, -0.0294271, -0.999191, -0.305779, -4.71158, 0.785301)
 shape = SubResource("BoxShape3D_rm0l6")
 
+[node name="Storage" type="Node3D" parent="Player"]
+script = ExtResource("15_cgb2n")
+
 [node name="SpaceStation" type="StaticBody3D" parent="."]
 
 [node name="space_station" parent="SpaceStation" instance=ExtResource("8_jqhqs")]
 transform = Transform3D(12, 0, 0, 0, 12, 0, 0, 0, 12, 8.34704, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_tssb0")
+shape = SubResource("BoxShape3D_vgs4s")
 
 [node name="PlayerSpawn" type="Node3D" parent="SpaceStation"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.18587, 0, 30.1377)

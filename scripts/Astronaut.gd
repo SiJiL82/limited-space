@@ -9,7 +9,5 @@ var rotate_speed = randf_range(min_rotate_speed, max_rotate_speed)
 func _process(_delta):
 	rotate_object_local(rotate_direction, rotate_speed)
 
-func _board_player_ship(ship:Node3D):
-	if ship.has_space:
-		get_owner().queue_free()
-		ship.pickup_astronaut()
+func _on_area_3d_body_entered(_body):
+	Messenger.ASTRONAUT_COLLIDED.emit(self)

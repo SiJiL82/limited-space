@@ -1,0 +1,9 @@
+extends Node
+
+signal FUEL_FUELCHANGED(_value)
+signal FUEL_MAXFUELSET(_value)
+signal STARTPANEL_STARTGAME()
+signal PLAYER_THRUSTAPPLIED()
+signal PLAYER_PICKEDUPASTRONAUT()
+signal ASTRONAUT_COLLIDED(_value)
+signal STORAGE_VALUECHANGED(_value)
