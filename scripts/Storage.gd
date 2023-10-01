@@ -24,6 +24,6 @@ func get_value():
 func get_capacity():
 	return capacity
 
-func empty(_empty):
+func empty(_num_of_astronauts):
 	value = 0
 	Messenger.STORAGE_VALUECHANGED.emit()

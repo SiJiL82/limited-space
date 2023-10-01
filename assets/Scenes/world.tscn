@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bhp02k7rppku4"]
+[gd_scene load_steps=33 format=3 uid="uid://bhp02k7rppku4"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_mp68m"]
 [ext_resource type="Script" path="res://scripts/FuelBar.gd" id="2_7praw"]
@@ -9,6 +9,8 @@
 [ext_resource type="FontFile" uid="uid://bifu74iphowgq" path="res://assets/fonts/Dashhorizon-eZ5wg.otf" id="3_qi70f"]
 [ext_resource type="FontFile" uid="uid://by8pfvbuu5tgi" path="res://assets/fonts/Cartesian-0W5Oo.otf" id="4_ac5o1"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="4_wpgq8"]
+[ext_resource type="Script" path="res://scripts/ScoreLabel.gd" id="5_h10br"]
+[ext_resource type="Script" path="res://scripts/Score.gd" id="5_nob05"]
 [ext_resource type="PackedScene" uid="uid://cjo7e2pn2ld76" path="res://assets/meshes/craft_racer.glb" id="5_o38gu"]
 [ext_resource type="Script" path="res://scripts/PlayButton.gd" id="6_50lxo"]
 [ext_resource type="StyleBox" uid="uid://b7w0rwwnu4p5f" path="res://assets/styles/playbutton.tres" id="6_jl3e4"]
@@ -111,6 +113,14 @@ text = "Astronauts in ship:"
 label_settings = SubResource("LabelSettings_bal5q")
 script = ExtResource("3_e4cxv")
 storage = NodePath("../../../../Player/Storage")
+
+[node name="ScoreContainer" type="HBoxContainer" parent="UI/GameInfo"]
+layout_mode = 2
+script = ExtResource("5_nob05")
+
+[node name="Label" type="Label" parent="UI/GameInfo/ScoreContainer"]
+layout_mode = 2
+script = ExtResource("5_h10br")
 
 [node name="StartPanel" type="Panel" parent="UI"]
 custom_minimum_size = Vector2(800, 600)
