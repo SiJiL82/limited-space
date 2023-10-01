@@ -47,7 +47,7 @@ albedo_color = Color(1, 0.337255, 0.0980392, 1)
 size = Vector3(16.2607, 8.44483, 13.8334)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vgs4s"]
-size = Vector3(2.14738, 1.09396, 2.45152)
+size = Vector3(2.42303, 1.09396, 2.45152)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cbyfv"]
 size = Vector3(43.6322, 25.613, 43.4014)
