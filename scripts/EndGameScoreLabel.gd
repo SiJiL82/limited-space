@@ -14,16 +14,16 @@ func update_score(_value):
 	score = _value
 
 func update_label_text():
-	var text
+	var label_text
 	if astronauts - score == 0:
-		text = "Congratulations - you successfully rescued all the workers!
+		label_text = "Congratulations - you successfully rescued all the workers!
 		
 		Now to figure out how you're all going to get off this damaged space station safely...
 		"
 	else:
 		var count_suffix = "" if score == 1 else "s"
-		text = "You successfully rescued " + str(score) + " worker" + count_suffix + " 
+		label_text = "You successfully rescued " + str(score) + " worker" + count_suffix + " 
 		
 			Unfortunately " + str(astronauts - score) + " of your colleagues weren't saved. Their bodies will drift endlessly through space."
 	
-	set_text(text)
+	set_text(label_text)
