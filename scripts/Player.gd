@@ -47,4 +47,3 @@ func _on_rescue_area_area_entered(_area):
 	var astronauts_in_storage = storage.get_value()
 	if astronauts_in_storage:
 		Messenger.PLAYER_DROPOFFASTRONAUT.emit(astronauts_in_storage)
-		print("rescue area entered")
