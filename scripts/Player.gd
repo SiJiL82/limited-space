@@ -54,11 +54,14 @@ func pickup_astronaut(astronaut):
 		astronaut.queue_free()
 
 func check_for_lose_conditions():
+	if check_if_out_of_bounds():
+		Messenger.PLAYER_LOSTGAME.emit()
 	if is_close_to_zero(linear_velocity.x) and is_close_to_zero(linear_velocity.z) and !fuel.has_fuel():
 		Messenger.PLAYER_LOSTGAME.emit()
 
 func is_close_to_zero(value) -> bool:
-	if value > -0.1 and value < 0.1:
+	var slow_speed: float = 0.3
+	if value > -slow_speed and value < slow_speed:
 		return true
 	return false
 
@@ -74,3 +77,23 @@ func move_to_rescue_area():
 		linear_velocity = Vector3.ZERO
 		Messenger.PLAYER_DROPOFFASTRONAUT.emit(storage.get_value())
 		unloading_astronauts = false
+
+
+func check_if_out_of_bounds():
+	var top_left = camera.project_position(Vector2(0,0), 150)
+	var bottom_right = camera.project_position(Vector2(1920, 1080), 150)
+	var buffer: int = 30
+
+	if global_transform.origin.x < (top_left.x - buffer):
+		return true
+	
+	if global_transform.origin.z < (top_left.z - buffer) :
+		return true
+	
+	if global_transform.origin.x > (bottom_right.x + buffer):
+		return true
+	
+	if global_transform.origin.z > (bottom_right.z + buffer):
+		return true
+	
+	return false
