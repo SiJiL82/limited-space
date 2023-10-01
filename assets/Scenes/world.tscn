@@ -23,6 +23,7 @@
 [ext_resource type="Script" path="res://scripts/Storage.gd" id="15_cgb2n"]
 [ext_resource type="PackedScene" uid="uid://c17qidxx46kx" path="res://assets/meshes/platform_large.glb" id="17_t5ymh"]
 [ext_resource type="Script" path="res://scripts/RescuePlatform.gd" id="17_ywrmo"]
+[ext_resource type="Material" uid="uid://chgfg27gqh1l4" path="res://assets/styles/engines.tres" id="19_5lsfv"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v2h0u"]
 
@@ -38,9 +39,6 @@ corner_radius_bottom_left = 3
 [sub_resource type="BoxShape3D" id="BoxShape3D_nx7s0"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_al74g"]
-
-[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_wl3o5"]
-albedo_color = Color(1, 0.337255, 0.0980392, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rm0l6"]
 size = Vector3(16.2607, 8.44483, 13.8334)
@@ -277,12 +275,17 @@ far = 500.0
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 200, 0)
 
-[node name="Player" type="RigidBody3D" parent="." node_paths=PackedStringArray("camera") groups=["Player"]]
+[node name="Player" type="RigidBody3D" parent="." node_paths=PackedStringArray("camera", "rescue_point") groups=["Player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.6728, 0, 36.6415)
+axis_lock_linear_y = true
+axis_lock_angular_x = true
+axis_lock_angular_z = true
 gravity_scale = 0.0
+freeze_mode = 1
 script = ExtResource("4_wpgq8")
 camera = NodePath("../Camera3D")
 rotate_speed = 0.08
+rescue_point = NodePath("../RescuePlatform/RescueArea/RescuePoint")
 
 [node name="craft_racer" parent="Player" instance=ExtResource("5_o38gu")]
 transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
@@ -297,12 +300,12 @@ script = ExtResource("6_qj61n")
 transform = Transform3D(0.2, 0, 0, 0, -4.79951e-08, -0.2, 0, 1.098, -8.74228e-09, -0.325827, 0.227381, 1.43856)
 mesh = SubResource("PrismMesh_al74g")
 skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("ORMMaterial3D_wl3o5")
+surface_material_override/0 = ExtResource("19_5lsfv")
 
 [node name="RightEngine" type="MeshInstance3D" parent="Player/craft_racer/Engines"]
 transform = Transform3D(0.2, 0, 0, 0, -4.37114e-08, -0.2, 0, 1, -8.74228e-09, 0.32, 0.22, 1.44)
 mesh = SubResource("PrismMesh_al74g")
-surface_material_override/0 = SubResource("ORMMaterial3D_wl3o5")
+surface_material_override/0 = ExtResource("19_5lsfv")
 
 [node name="EngineShowTimer" type="Timer" parent="Player/craft_racer/Engines"]
 wait_time = 0.5
@@ -346,5 +349,8 @@ transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, -7.87616, -2.03156, 15.2888)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RescuePlatform/RescueArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.37374, 5.67789, 28.5927)
 shape = SubResource("BoxShape3D_8gqvo")
+
+[node name="RescuePoint" type="Node3D" parent="RescuePlatform/RescueArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.17219, 0, 27.3096)
 
 [connection signal="area_entered" from="RescuePlatform/RescueArea" to="Player" method="_on_rescue_area_area_entered"]

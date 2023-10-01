@@ -3,11 +3,14 @@ extends RigidBody3D
 @export var camera: Camera3D
 @export var thrust: int = 5
 @export_range(0, 1) var rotate_speed: float = 0
+@export var rescue_point: Node3D
 
 @onready var storage = $Storage
 
 var fuel: Node3D
 var game_active: bool = false
+var unloading_astronauts: bool = false
+var is_docked: bool = false
 
 func _ready():
 	fuel = get_node("Fuel")
@@ -16,11 +19,14 @@ func _ready():
 
 func _physics_process(_delta):
 	if game_active:
-		look_at_mouse()
-		if Input.is_action_just_pressed("thruster"):
-			if fuel.has_fuel():
-				apply_thrust()
-		check_for_lose_conditions()
+		if unloading_astronauts:
+			move_to_rescue_area()
+		else:
+			look_at_mouse()
+			if Input.is_action_just_pressed("thruster"):
+				if fuel.has_fuel():
+					apply_thrust()
+			check_for_lose_conditions()
 
 func look_at_mouse():
 	var player_pos = global_transform.origin
@@ -56,7 +62,15 @@ func is_close_to_zero(value) -> bool:
 		return true
 	return false
 
-func _on_rescue_area_area_entered(_area):
-	var astronauts_in_storage = storage.get_value()
-	if astronauts_in_storage:
-		Messenger.PLAYER_DROPOFFASTRONAUT.emit(astronauts_in_storage)
+func _on_rescue_area_area_entered(_area):	
+	if storage.get_value():
+		unloading_astronauts = true
+
+func move_to_rescue_area():
+	var target_direction = transform.origin.direction_to(rescue_point.global_position)
+	var target_distance = transform.origin.distance_to(rescue_point.global_position)
+	linear_velocity = target_direction.normalized() * 4
+	if target_distance < 1.0:
+		linear_velocity = Vector3.ZERO
+		Messenger.PLAYER_DROPOFFASTRONAUT.emit(storage.get_value())
+		unloading_astronauts = false

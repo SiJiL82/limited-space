@@ -2,7 +2,7 @@ extends Node3D
 
 @export var max_fuel: int = 20
 var fuel
-var refuel_values = [0, 10, 15, 20]
+var refuel_values = [0, 2, 4, 8]
 
 func _ready():
 	reset_fuel()
