@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bhp02k7rppku4"]
+[gd_scene load_steps=33 format=3 uid="uid://bhp02k7rppku4"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_mp68m"]
 [ext_resource type="Script" path="res://scripts/FuelBar.gd" id="2_7praw"]
@@ -9,6 +9,8 @@
 [ext_resource type="FontFile" uid="uid://bifu74iphowgq" path="res://assets/fonts/Dashhorizon-eZ5wg.otf" id="3_qi70f"]
 [ext_resource type="FontFile" uid="uid://by8pfvbuu5tgi" path="res://assets/fonts/Cartesian-0W5Oo.otf" id="4_ac5o1"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="4_wpgq8"]
+[ext_resource type="Script" path="res://scripts/ScoreLabel.gd" id="5_h10br"]
+[ext_resource type="Script" path="res://scripts/Score.gd" id="5_nob05"]
 [ext_resource type="PackedScene" uid="uid://cjo7e2pn2ld76" path="res://assets/meshes/craft_racer.glb" id="5_o38gu"]
 [ext_resource type="Script" path="res://scripts/PlayButton.gd" id="6_50lxo"]
 [ext_resource type="StyleBox" uid="uid://b7w0rwwnu4p5f" path="res://assets/styles/playbutton.tres" id="6_jl3e4"]
@@ -16,6 +18,8 @@
 [ext_resource type="Script" path="res://scripts/Fuel.gd" id="7_t456d"]
 [ext_resource type="PackedScene" uid="uid://b3htof6nno8ja" path="res://assets/meshes/space_station.glb" id="8_jqhqs"]
 [ext_resource type="Script" path="res://scripts/Storage.gd" id="15_cgb2n"]
+[ext_resource type="PackedScene" uid="uid://c17qidxx46kx" path="res://assets/meshes/platform_large.glb" id="17_t5ymh"]
+[ext_resource type="Script" path="res://scripts/RescuePlatform.gd" id="17_ywrmo"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v2h0u"]
 
@@ -46,6 +50,15 @@ albedo_color = Color(1, 0.337255, 0.0980392, 1)
 size = Vector3(16.2607, 8.44483, 13.8334)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vgs4s"]
+size = Vector3(2.42303, 1.09396, 2.45152)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cbyfv"]
+size = Vector3(43.6322, 25.613, 43.4014)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qrmrw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8gqvo"]
+size = Vector3(15.8054, 19.7452, 13.6546)
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("player", "player_spawn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.57782, 0, 0.176666)
@@ -57,7 +70,6 @@ player_spawn = NodePath("SpaceStation/PlayerSpawn")
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="GameInfo" type="PanelContainer" parent="UI"]
-visible = false
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 245.0
@@ -101,6 +113,14 @@ text = "Astronauts in ship:"
 label_settings = SubResource("LabelSettings_bal5q")
 script = ExtResource("3_e4cxv")
 storage = NodePath("../../../../Player/Storage")
+
+[node name="ScoreContainer" type="HBoxContainer" parent="UI/GameInfo"]
+layout_mode = 2
+script = ExtResource("5_nob05")
+
+[node name="Label" type="Label" parent="UI/GameInfo/ScoreContainer"]
+layout_mode = 2
+script = ExtResource("5_h10br")
 
 [node name="StartPanel" type="Panel" parent="UI"]
 custom_minimum_size = Vector2(800, 600)
@@ -238,3 +258,24 @@ shape = SubResource("BoxShape3D_vgs4s")
 
 [node name="PlayerSpawn" type="Node3D" parent="SpaceStation"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.18587, 0, 30.1377)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SpaceStation"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.00114, 0, -7.90496)
+shape = SubResource("BoxShape3D_cbyfv")
+
+[node name="RescuePlatform" type="StaticBody3D" parent="."]
+script = ExtResource("17_ywrmo")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RescuePlatform"]
+shape = SubResource("BoxShape3D_qrmrw")
+
+[node name="platform_large" parent="RescuePlatform" instance=ExtResource("17_t5ymh")]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, -7.87616, -2.03156, 15.2888)
+
+[node name="RescueArea" type="Area3D" parent="RescuePlatform"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RescuePlatform/RescueArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.37374, 5.67789, 28.5927)
+shape = SubResource("BoxShape3D_8gqvo")
+
+[connection signal="area_entered" from="RescuePlatform/RescueArea" to="Player" method="_on_rescue_area_area_entered"]
