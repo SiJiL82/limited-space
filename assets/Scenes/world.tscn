@@ -9,7 +9,7 @@
 [ext_resource type="FontFile" uid="uid://bifu74iphowgq" path="res://assets/fonts/Dashhorizon-eZ5wg.otf" id="3_qi70f"]
 [ext_resource type="FontFile" uid="uid://by8pfvbuu5tgi" path="res://assets/fonts/Cartesian-0W5Oo.otf" id="4_ac5o1"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="4_wpgq8"]
-[ext_resource type="StyleBox" uid="uid://bfjhnulbioouc" path="res://assets/styles/infopanel.tres" id="5_48g4y"]
+[ext_resource type="StyleBox" path="res://assets/styles/infopanel.tres" id="5_48g4y"]
 [ext_resource type="Script" path="res://scripts/Score.gd" id="5_nob05"]
 [ext_resource type="PackedScene" uid="uid://cjo7e2pn2ld76" path="res://assets/meshes/craft_racer.glb" id="5_o38gu"]
 [ext_resource type="Script" path="res://scripts/PlayButton.gd" id="6_50lxo"]
@@ -27,7 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://c17qidxx46kx" path="res://assets/meshes/platform_large.glb" id="17_t5ymh"]
 [ext_resource type="Script" path="res://scripts/RescuePlatform.gd" id="17_ywrmo"]
 [ext_resource type="AudioStream" uid="uid://ygrjipgt4ik1" path="res://assets/audio/sfx/203264__metrostock99__rocket-booster-raw-editable.ogg" id="18_h70dx"]
-[ext_resource type="Material" uid="uid://chgfg27gqh1l4" path="res://assets/styles/engines.tres" id="19_5lsfv"]
+[ext_resource type="Material" path="res://assets/styles/engines.tres" id="19_5lsfv"]
 [ext_resource type="AudioStream" uid="uid://dldyuvim8jrbn" path="res://assets/audio/sfx/396649__matrixxx__space-atmosphere-02.ogg" id="22_l1fk6"]
 [ext_resource type="AudioStream" uid="uid://d6nsk5acnpr" path="res://assets/audio/sfx/pickup-sting.ogg" id="23_ebxa8"]
 [ext_resource type="AudioStream" uid="uid://c242nk105qnlp" path="res://assets/audio/sfx/dropoff-sting.ogg" id="24_e5sog"]
@@ -201,8 +201,6 @@ theme_override_styles/disabled = ExtResource("6_jl3e4")
 theme_override_styles/focus = ExtResource("6_jl3e4")
 text = "Play"
 script = ExtResource("6_50lxo")
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="UI/StartPanel"]
 
 [node name="LosePanel" type="Panel" parent="UI"]
 visible = false
@@ -421,11 +419,13 @@ wait_time = 0.5
 
 [node name="booster" type="AudioStreamPlayer" parent="Player/craft_racer/Engines"]
 stream = ExtResource("18_h70dx")
-volume_db = -12.479
+volume_db = -15.889
+bus = &"SFX"
 
 [node name="engine" type="AudioStreamPlayer" parent="Player/craft_racer/Engines"]
 stream = ExtResource("27_ak7yy")
-volume_db = -20.0
+volume_db = -25.797
+bus = &"SFX"
 
 [node name="Fuel" type="Node3D" parent="Player"]
 script = ExtResource("7_t456d")
@@ -442,14 +442,17 @@ script = ExtResource("15_cgb2n")
 [node name="pick_up_fx" type="AudioStreamPlayer" parent="Player"]
 stream = ExtResource("23_ebxa8")
 volume_db = -17.731
+bus = &"SFX"
 
 [node name="drop_off_fx" type="AudioStreamPlayer" parent="Player"]
 stream = ExtResource("24_e5sog")
 volume_db = -17.415
+bus = &"SFX"
 
 [node name="landing" type="AudioStreamPlayer" parent="Player"]
 stream = ExtResource("25_gca2q")
-volume_db = -15.0
+volume_db = -21.138
+bus = &"SFX"
 
 [node name="SpaceStation" type="StaticBody3D" parent="."]
 
