@@ -27,6 +27,7 @@ func spawn_astronaut():
 	self.add_child(spawnedAstronaut)
 	var animation_player = spawnedAstronaut.get_node("astronautA").get_node("AnimationPlayer")
 	animation_player.play("spinning")
+	Messenger.WORLD_SPAWNEDASTRONAUT.emit()
 
 func generate_random_location():
 	var width = -180
@@ -64,3 +65,4 @@ func reset_game_over_timer():
 
 func end_game():
 	Messenger.WORLD_ENDGAME.emit()
+	reset_game_over_timer()

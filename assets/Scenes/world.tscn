@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://bhp02k7rppku4"]
+[gd_scene load_steps=46 format=3 uid="uid://bhp02k7rppku4"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_mp68m"]
 [ext_resource type="Script" path="res://scripts/FuelBar.gd" id="2_7praw"]
@@ -21,7 +21,10 @@
 [ext_resource type="Script" path="res://scripts/LosePanel.gd" id="11_ily60"]
 [ext_resource type="Script" path="res://scripts/PlayAgainButton.gd" id="12_4bssr"]
 [ext_resource type="Script" path="res://scripts/Storage.gd" id="15_cgb2n"]
+[ext_resource type="Script" path="res://scripts/EndGameScoreLabel.gd" id="15_eobmi"]
 [ext_resource type="Script" path="res://scripts/EndGameProgressBar.gd" id="15_qeusc"]
+[ext_resource type="Script" path="res://scripts/EndGamePanel.gd" id="15_y70a2"]
+[ext_resource type="Script" path="res://scripts/EndGameTimer.gd" id="17_kgn3f"]
 [ext_resource type="PackedScene" uid="uid://c17qidxx46kx" path="res://assets/meshes/platform_large.glb" id="17_t5ymh"]
 [ext_resource type="Script" path="res://scripts/RescuePlatform.gd" id="17_ywrmo"]
 [ext_resource type="AudioStream" uid="uid://ygrjipgt4ik1" path="res://assets/audio/sfx/203264__metrostock99__rocket-booster-raw-editable.ogg" id="18_h70dx"]
@@ -42,6 +45,13 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
 [sub_resource type="LabelSettings" id="LabelSettings_bal5q"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_muhga"]
+bg_color = Color(0.0941176, 0, 0.619608, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nx7s0"]
 
@@ -73,6 +83,7 @@ player_spawn = NodePath("SpaceStation/PlayerSpawn")
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="GameInfo" type="PanelContainer" parent="UI"]
+visible = false
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 245.0
@@ -275,16 +286,99 @@ theme_override_styles/focus = ExtResource("6_jl3e4")
 text = "Play again"
 script = ExtResource("12_4bssr")
 
-[node name="EndGameProgressBar" type="ProgressBar" parent="UI"]
+[node name="EndGamePanel" type="Panel" parent="UI"]
 visible = false
-custom_minimum_size = Vector2(200, 0)
+custom_minimum_size = Vector2(800, 600)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("5_48g4y")
+script = ExtResource("15_y70a2")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/EndGamePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/EndGamePanel/MarginContainer"]
+layout_mode = 2
+
+[node name="EndGameLabel" type="Label" parent="UI/EndGamePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.945098, 1, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_qi70f")
+theme_override_font_sizes/font_size = 64
+text = "Game Over"
+horizontal_alignment = 1
+
+[node name="EndGameScoreLabel" type="Label" parent="UI/EndGamePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 18
+autowrap_mode = 2
+script = ExtResource("15_eobmi")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/EndGamePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PlayAgainButton" type="Button" parent="UI/EndGamePanel/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_colors/font_color = Color(0, 0.658824, 0.117647, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.403922, 0.054902, 1)
+theme_override_colors/font_hover_color = Color(0, 0.964706, 0.192157, 1)
+theme_override_fonts/font = ExtResource("4_ac5o1")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = ExtResource("6_jl3e4")
+theme_override_styles/hover = ExtResource("6_jl3e4")
+theme_override_styles/pressed = ExtResource("6_jl3e4")
+theme_override_styles/disabled = ExtResource("6_jl3e4")
+theme_override_styles/focus = ExtResource("6_jl3e4")
+text = "Play again"
+script = ExtResource("12_4bssr")
+
+[node name="EndGameTimer" type="MarginContainer" parent="UI"]
+visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -2.0
-offset_right = 2.0
-offset_bottom = 27.0
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
 grow_horizontal = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 10
+script = ExtResource("17_kgn3f")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/EndGameTimer"]
+layout_mode = 2
+
+[node name="EndGameTimerLabel" type="Label" parent="UI/EndGameTimer/HBoxContainer"]
+layout_mode = 2
+text = "Ending mission:"
+
+[node name="EndGameProgressBar" type="ProgressBar" parent="UI/EndGameTimer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_muhga")
 show_percentage = false
 script = ExtResource("15_qeusc")
 
