@@ -282,7 +282,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.6728, 0, 36.6415)
 gravity_scale = 0.0
 script = ExtResource("4_wpgq8")
 camera = NodePath("../Camera3D")
-thrust = 1
 rotate_speed = 0.08
 
 [node name="craft_racer" parent="Player" instance=ExtResource("5_o38gu")]
