@@ -29,9 +29,12 @@ func generate_random_location():
 	var spawnX = 0
 	var spawnZ = 0
 
-	while spawnX > -20 and spawnX < 20:
+	var nospawn_x = 25
+	var nospawn_z = 15
+
+	while spawnX > -nospawn_x and spawnX < nospawn_x:
 		spawnX = rng.randf_range(-width, width)
-	while spawnZ > -10 and spawnZ < 10:
+	while spawnZ > -nospawn_z and spawnZ < nospawn_z:
 		spawnZ = rng.randf_range(-height, height)
 	
 	return Vector3(spawnX, 0, spawnZ)
