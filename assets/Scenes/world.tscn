@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://bhp02k7rppku4"]
+[gd_scene load_steps=45 format=3 uid="uid://bhp02k7rppku4"]
 
 [ext_resource type="Script" path="res://scripts/World.gd" id="1_mp68m"]
 [ext_resource type="Script" path="res://scripts/FuelBar.gd" id="2_7praw"]
@@ -9,8 +9,7 @@
 [ext_resource type="FontFile" uid="uid://bifu74iphowgq" path="res://assets/fonts/Dashhorizon-eZ5wg.otf" id="3_qi70f"]
 [ext_resource type="FontFile" uid="uid://by8pfvbuu5tgi" path="res://assets/fonts/Cartesian-0W5Oo.otf" id="4_ac5o1"]
 [ext_resource type="Script" path="res://scripts/Player.gd" id="4_wpgq8"]
-[ext_resource type="StyleBox" path="res://assets/styles/infopanel.tres" id="5_48g4y"]
-[ext_resource type="Script" path="res://scripts/ScoreLabel.gd" id="5_h10br"]
+[ext_resource type="StyleBox" uid="uid://bfjhnulbioouc" path="res://assets/styles/infopanel.tres" id="5_48g4y"]
 [ext_resource type="Script" path="res://scripts/Score.gd" id="5_nob05"]
 [ext_resource type="PackedScene" uid="uid://cjo7e2pn2ld76" path="res://assets/meshes/craft_racer.glb" id="5_o38gu"]
 [ext_resource type="Script" path="res://scripts/PlayButton.gd" id="6_50lxo"]
@@ -21,10 +20,14 @@
 [ext_resource type="Script" path="res://scripts/LosePanel.gd" id="11_ily60"]
 [ext_resource type="Script" path="res://scripts/PlayAgainButton.gd" id="12_4bssr"]
 [ext_resource type="Script" path="res://scripts/Storage.gd" id="15_cgb2n"]
+[ext_resource type="Script" path="res://scripts/EndGameScoreLabel.gd" id="15_eobmi"]
+[ext_resource type="Script" path="res://scripts/EndGameProgressBar.gd" id="15_qeusc"]
+[ext_resource type="Script" path="res://scripts/EndGamePanel.gd" id="15_y70a2"]
+[ext_resource type="Script" path="res://scripts/EndGameTimer.gd" id="17_kgn3f"]
 [ext_resource type="PackedScene" uid="uid://c17qidxx46kx" path="res://assets/meshes/platform_large.glb" id="17_t5ymh"]
 [ext_resource type="Script" path="res://scripts/RescuePlatform.gd" id="17_ywrmo"]
 [ext_resource type="AudioStream" uid="uid://ygrjipgt4ik1" path="res://assets/audio/sfx/203264__metrostock99__rocket-booster-raw-editable.ogg" id="18_h70dx"]
-[ext_resource type="Material" path="res://assets/styles/engines.tres" id="19_5lsfv"]
+[ext_resource type="Material" uid="uid://chgfg27gqh1l4" path="res://assets/styles/engines.tres" id="19_5lsfv"]
 [ext_resource type="AudioStream" uid="uid://dldyuvim8jrbn" path="res://assets/audio/sfx/396649__matrixxx__space-atmosphere-02.ogg" id="22_l1fk6"]
 [ext_resource type="AudioStream" uid="uid://d6nsk5acnpr" path="res://assets/audio/sfx/pickup-sting.ogg" id="23_ebxa8"]
 [ext_resource type="AudioStream" uid="uid://c242nk105qnlp" path="res://assets/audio/sfx/dropoff-sting.ogg" id="24_e5sog"]
@@ -41,6 +44,13 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
 [sub_resource type="LabelSettings" id="LabelSettings_bal5q"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_muhga"]
+bg_color = Color(0.4, 0.52549, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nx7s0"]
 
@@ -67,9 +77,12 @@ num_astronauts = 20
 player = NodePath("Player")
 player_spawn = NodePath("SpaceStation/PlayerSpawn")
 
+[node name="EndGameTimer" type="Timer" parent="."]
+
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="GameInfo" type="PanelContainer" parent="UI"]
+visible = false
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 245.0
@@ -113,14 +126,6 @@ text = "Astronauts in ship:"
 label_settings = SubResource("LabelSettings_bal5q")
 script = ExtResource("3_e4cxv")
 storage = NodePath("../../../../Player/Storage")
-
-[node name="ScoreContainer" type="HBoxContainer" parent="UI/GameInfo"]
-layout_mode = 2
-script = ExtResource("5_nob05")
-
-[node name="Label" type="Label" parent="UI/GameInfo/ScoreContainer"]
-layout_mode = 2
-script = ExtResource("5_h10br")
 
 [node name="StartPanel" type="Panel" parent="UI"]
 custom_minimum_size = Vector2(800, 600)
@@ -272,6 +277,102 @@ theme_override_styles/focus = ExtResource("6_jl3e4")
 text = "Play again"
 script = ExtResource("12_4bssr")
 
+[node name="EndGamePanel" type="Panel" parent="UI"]
+visible = false
+custom_minimum_size = Vector2(800, 600)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("5_48g4y")
+script = ExtResource("15_y70a2")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/EndGamePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/EndGamePanel/MarginContainer"]
+layout_mode = 2
+
+[node name="EndGameLabel" type="Label" parent="UI/EndGamePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.945098, 1, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_qi70f")
+theme_override_font_sizes/font_size = 64
+text = "Game Over"
+horizontal_alignment = 1
+
+[node name="EndGameScoreLabel" type="Label" parent="UI/EndGamePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 18
+autowrap_mode = 2
+script = ExtResource("15_eobmi")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/EndGamePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PlayAgainButton" type="Button" parent="UI/EndGamePanel/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_colors/font_color = Color(0, 0.658824, 0.117647, 1)
+theme_override_colors/font_pressed_color = Color(0, 0.403922, 0.054902, 1)
+theme_override_colors/font_hover_color = Color(0, 0.964706, 0.192157, 1)
+theme_override_fonts/font = ExtResource("4_ac5o1")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = ExtResource("6_jl3e4")
+theme_override_styles/hover = ExtResource("6_jl3e4")
+theme_override_styles/pressed = ExtResource("6_jl3e4")
+theme_override_styles/disabled = ExtResource("6_jl3e4")
+theme_override_styles/focus = ExtResource("6_jl3e4")
+text = "Play again"
+script = ExtResource("12_4bssr")
+
+[node name="EndGameTimer" type="MarginContainer" parent="UI"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 10
+script = ExtResource("17_kgn3f")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/EndGameTimer"]
+layout_mode = 2
+
+[node name="EndGameTimerLabel" type="Label" parent="UI/EndGameTimer/HBoxContainer"]
+layout_mode = 2
+text = "Ending rescue attempt:"
+
+[node name="EndGameProgressBar" type="ProgressBar" parent="UI/EndGameTimer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_muhga")
+show_percentage = false
+script = ExtResource("15_qeusc")
+
 [node name="Space" type="Sprite3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, -4.37114e-07, 10, 0, -10, -4.37114e-07, -1.173, -5, -3.923)
 texture = ExtResource("3_gxbaj")
@@ -349,7 +450,6 @@ volume_db = -17.415
 [node name="landing" type="AudioStreamPlayer" parent="Player"]
 stream = ExtResource("25_gca2q")
 volume_db = -15.0
-bus = &"SFX"
 
 [node name="SpaceStation" type="StaticBody3D" parent="."]
 
@@ -385,6 +485,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.17219, 0, 27.3096)
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("22_l1fk6")
 autoplay = true
-bus = &"Atmos"
+
+[node name="Score" type="Node3D" parent="."]
+script = ExtResource("5_nob05")
 
 [connection signal="area_entered" from="RescuePlatform/RescueArea" to="Player" method="_on_rescue_area_area_entered"]
+[connection signal="area_exited" from="RescuePlatform/RescueArea" to="Player" method="_on_rescue_area_area_exited"]
